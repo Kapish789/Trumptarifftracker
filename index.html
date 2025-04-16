@@ -13,7 +13,7 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Simple scrollbar styling for a cleaner look */
+        /* Simple scrollbar styling */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -27,12 +27,12 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #718096; /* gray-500 */
         }
-        /* Ensure long text wraps in the info section */
+        /* Text wrapping */
         .info-paragraph {
-             white-space: pre-wrap; /* Preserves whitespace and wraps text */
-             word-break: break-word; /* Breaks long words if necessary */
+             white-space: pre-wrap;
+             word-break: break-word;
         }
-        /* Animation for the header text gradient */
+        /* Header text animation */
         @keyframes pulse-text {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
@@ -40,19 +40,47 @@
         .animate-pulse-text {
             animation: pulse-text 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
+        /* Styling for navigation buttons */
+        .nav-button {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .nav-button-active {
+            background-color: #4a5568; /* gray-600 */
+            color: #e2e8f0; /* gray-200 */
+            font-weight: 600;
+        }
+        .nav-button-inactive {
+             background-color: #2d3748; /* gray-800 */
+             color: #a0aec0; /* gray-400 */
+        }
+         .nav-button-inactive:hover {
+             background-color: #4a5568; /* gray-600 */
+             color: #e2e8f0; /* gray-200 */
+         }
+         /* Hide element smoothly */
+         .hidden-smooth {
+            display: none;
+         }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-black text-gray-100 min-h-screen flex flex-col items-center p-4 md:p-8">
 
-    <header class="w-full max-w-4xl mb-8 md:mb-12 text-center">
+    <header class="w-full max-w-4xl mb-6 md:mb-8 text-center">
         <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate-pulse-text">
             Trump Tariff Tracker
         </h1>
-        <p class="text-gray-400 mt-2 text-sm md:text-base">Select a country to view potential tariff details (Data as of Apr 14, 2025)</p>
+        <p class="text-gray-400 mt-2 text-sm md:text-base">View potential tariff details (Data as of Apr 14, 2025)</p>
     </header>
 
+    <nav class="w-full max-w-4xl mb-6 md:mb-8 flex flex-wrap justify-center gap-2 md:gap-4">
+        <button id="nav-country" class="nav-button nav-button-active px-4 py-2 rounded-md text-sm md:text-base">Country Tariffs</button>
+        <button id="nav-product" class="nav-button nav-button-inactive px-4 py-2 rounded-md text-sm md:text-base">Product Tariffs</button>
+        <button id="nav-exceptions" class="nav-button nav-button-inactive px-4 py-2 rounded-md text-sm md:text-base">Exceptions</button>
+        <button id="nav-updates" class="nav-button nav-button-inactive px-4 py-2 rounded-md text-sm md:text-base">Updates & Publications</button>
+    </nav>
+
     <main class="w-full max-w-4xl bg-gray-800 bg-opacity-50 backdrop-blur-md rounded-lg shadow-2xl p-6 md:p-8">
-        <div class="mb-6">
+        <div id="country-selector-container" class="mb-6">
             <label for="country-select" class="block text-lg font-semibold mb-2 text-gray-300">Select Country:</label>
             <select id="country-select" name="country" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-lg">
                 <option value="">-- Select a Country --</option>
@@ -67,7 +95,7 @@
     <footer class="w-full max-w-4xl mt-12 text-gray-500 text-sm flex flex-col sm:flex-row justify-between items-center px-2">
         <div class="text-center sm:text-left mb-2 sm:mb-0">
              <span>Disclaimer: Information based on Reed Smith's analysis as of April 14, 2025. Subject to change. For informational purposes only.</span>
-            <a href="https://www.tradecomplianceresourcehub.com/2025/04/11/trump-2-0-tariff-tracker/#" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline ml-1">Source</a>
+            <a href="https://www.tradecomplianceresourcehub.com/2025/04/14/trump-2-0-tariff-tracker/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline ml-1">Source</a>
         </div>
         <div class="text-center sm:text-right">
             Website created by: Kapisch Bhardwaj
@@ -76,32 +104,30 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("DOM fully loaded and parsed"); // Debug log 1
+            console.log("DOM fully loaded and parsed");
 
             // --- Data ---
-            // Updated Tariff Data Object based on April 14, 2025 list provided by user
-            const tariffData = {
+
+            // 1. Country-Specific Tariff Data
+            const countryTariffData = {
                  "All": {
                     status: "Reciprocal tariffs: Implemented (effective Apr. 5, 2025).\nThreatened to start on or after Apr. 2 (Mar. 24, 2025).\nThreatened \"secondary tariffs\" (Mar. 30, 2025)",
                     rate: "10% baseline (unless replaced by a country-specific rate below)\n25%\n25–50%",
                     scope: "All products (see exceptions below)\nAll products from any country that imports Venezuelan oil\nAll products from any country that imports Iranian or Russian oil",
                     info: "See related publications below.\nFor trading partners with a country-specific rate below: Under the current language of the executive order, it appears the country-specific rate was in effect on April 9. Further guidance on this point may be forthcoming. Effective April 10, the country-specific rate for all countries, except China, is suspended until July 9. During this time, imports from those trading partners will be subject to the 10% baseline reciprocal tariff rate.\nExecutive Order (Apr. 9, 2025)\nExec. Order 14257 (Apr. 2, 2025)\nReciprocal Trade and Tariffs Memorandum (Feb. 13, 2025)\nExec. Order 14245 (Mar. 24, 2025)",
-                    countermeasures: "N/A" // Explicitly N/A as per table
+                    countermeasures: "N/A"
                 },
-                "Algeria": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "30%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Angola": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "32%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                // Argentina - Not explicitly listed in the country-specific table provided for Apr 14 update, keeping previous data might be misleading. Removing or marking as 'Data Not Available in Apr 14 List'. For consistency, will remove.
-                // Australia - Not explicitly listed in the country-specific table provided for Apr 14 update. Removing.
-                "Austria": { status: "Threatened (Feb. 21, 2025)", rate: "TBD", scope: "TBD", info: "See also EU\nDefending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)\nUSTR may renew Section 301 investigation to address digital services taxes (DSTs)", countermeasures: null }, // Assuming N/A if blank
-                "Bangladesh": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "37%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Belarus": { status: "Reciprocal tariff exemption: imports not subject to reciprocal tariffs at this time", rate: null, scope: null, info: null, countermeasures: null }, // Assuming N/A if blank
-                "Bosnia and Herzegovina": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "36%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Botswana": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "38%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                // Brazil - Not explicitly listed in the country-specific table provided for Apr 14 update. Removing.
-                "BRICS": { status: "Threatened (Jan. 30, 2025)", rate: "100%", scope: "All products", info: "The BRICS members are Brazil, China, Egypt, Ethiopia, India, Indonesia, Iran, the United Arab Emirates, Russia, and South Africa.", countermeasures: null }, // Added footnote info here. Assuming N/A countermeasures if blank
-                "Brunei": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "24%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Cambodia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "49%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Cameroon": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "12%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
+                "Algeria": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "30%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Angola": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "32%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Austria": { status: "Threatened (Feb. 21, 2025)", rate: "TBD", scope: "TBD", info: "See also EU\nDefending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)\nUSTR may renew Section 301 investigation to address digital services taxes (DSTs)", countermeasures: null },
+                "Bangladesh": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "37%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Belarus": { status: "Reciprocal tariff exemption: imports not subject to reciprocal tariffs at this time", rate: null, scope: null, info: null, countermeasures: null },
+                "Bosnia and Herzegovina": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "36%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Botswana": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "38%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "BRICS": { status: "Threatened (Jan. 30, 2025)", rate: "100%", scope: "All products", info: "The BRICS members are Brazil, China, Egypt, Ethiopia, India, Indonesia, Iran, the United Arab Emirates, Russia, and South Africa.", countermeasures: null },
+                "Brunei": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "24%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Cambodia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "49%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Cameroon": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "12%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
                 "Canada": {
                     status: "Implemented (effective Mar. 4, 2025; adjusted Mar. 6, 2025)\nThreatened to start Apr. 2 (Mar. 7, 2025)",
                     rate: "0%\n10%\n10%\n25%\n250%",
@@ -109,7 +135,7 @@
                     info: "See related publications below\nReciprocal tariff exemption: imports not subject to reciprocal tariffs at this time\nDe minimis exemption remains available until further notice\nExec. Order 14231 (Mar. 6, 2025)\nDefending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)\nUSTR may initiate Section 302 investigation to address DSTs\nExec. Order 14197 (Feb. 3, 2025)\nExec. Order 14193 (Feb. 1, 2025)",
                     countermeasures: "Effective Apr. 9, 2025: (a) 25% ad valorem tariffs on (a) non-USMCA compliant fully assembled vehicles; and (b) non-Canadian and non-Mexican content of USMCA-compliant fully assembled vehicles imported from the United States\nEffective Mar. 13, 2025: 25% ad valorem tariffs on CAD $29.8 billion worth of U.S.-origin goods\nThe Ontario government suspended its 25% surcharge on all electricity exports to the United States (Mar. 11, 2025)\nEffective Mar. 4, 2025: 25% ad valorem tariff on $30 billion worth of U.S.-origin goods\nEffective date expected Apr. 2: 25% ad valorem tariff on $125 billion worth of additional goods"
                 },
-                "Chad": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "13%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
+                "Chad": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "13%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
                 "China": {
                     status: "Reciprocal tariff: Implemented (effective Apr. 9, 2025; increased effective Apr. 9, 2025; increased effective Apr. 10, 2025)\nImplemented (effective Feb. 4, 2025; increased Mar. 4, 2025)\nThreatened to start Apr. 2 (Mar. 24, 2025)",
                     rate: "125%\n20%\n25%",
@@ -117,196 +143,322 @@
                     info: "See related publications below\nDuty-free de minimis exemption revoked (effective May 2, 2025)\nPurchaser of Venezuelan oil, which may trigger additional tariffs\nExecutive Order (Apr. 9, 2025)\nExecutive Order (Apr. 8, 2025)\nExec. Order 14256 (Apr. 2, 2025)\nExec. Order 14228 (Mar. 3, 2025)\nExec. Order 14195 (Feb. 1, 2025)",
                     countermeasures: "Effective Apr. 10, 2025 (increased effective Apr. 12, 2025): additional 125% ad valorem tariff on all U.S.-origin goods\nEffective Mar. 10, 2025: (a) 15% ad valorem tariffs on U.S.-origin chicken, cotton, corn, and wheat (b) 10% ad valorem tariffs on U.S.-origin aquatic products, beef, dairy products, fruit, pork, sorghum, soybeans, and vegetables\nEffective Mar. 4, 2025: imports of U.S.-origin logs suspended\nEffective Feb. 10, 2025: (a) 15% ad valorem tariffs on supercooled natural gas and coal from the U.S. (b) 10% ad valorem tariffs on U.S.-origin crude oil\nEffective Feb. 4 (modified Apr. 4): export controls on tungsten; tellurium; bismuth; molybdenum; indium products; and seven categories of medium and heavy rare earth-related items, including samarium, gadolinium, zirconium, dysprosium, lutetium, scandium, and yttrium"
                 },
-                "Colombia": { status: "Threatened and rescinded (Jan. 26, 2025)", rate: "25%", scope: "All products", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Côte d'Ivoire": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "21%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Cuba": { status: "Reciprocal tariff exemption: imports not subject to reciprocal tariffs at this time", rate: null, scope: null, info: null, countermeasures: null }, // Assuming N/A if blank
-                "Democratic Republic of Congo": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "11%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Dominican Republic": { status: "Threatened to start Apr. 2 (Mar. 24, 2025)", rate: "25%", scope: "All products", info: "Purchaser of Venezuelan oil, which may trigger additional tariffs", countermeasures: null }, // Assuming N/A if blank
-                "Equatorial Guinea": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "13%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
+                "Colombia": { status: "Threatened and rescinded (Jan. 26, 2025)", rate: "25%", scope: "All products", info: null, countermeasures: null },
+                "Côte d'Ivoire": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "21%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Cuba": { status: "Reciprocal tariff exemption: imports not subject to reciprocal tariffs at this time", rate: null, scope: null, info: null, countermeasures: null },
+                "Democratic Republic of Congo": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "11%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Dominican Republic": { status: "Threatened to start Apr. 2 (Mar. 24, 2025)", rate: "25%", scope: "All products", info: "Purchaser of Venezuelan oil, which may trigger additional tariffs", countermeasures: null },
+                "Equatorial Guinea": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "13%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
                 "EU": {
                     status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)\nThreatened (Feb. 26, 2025)\nThreatened (Mar. 13, 2025)",
                     rate: "20%\n25%\n200%",
                     scope: "All products (see exceptions below)\nTBD\nAlcohol products, including champagne and wine",
-                    info: "During a cabinet meeting on February 26, President Trump said the announcement will be made “very soon.”\nDefending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)", // Removed DST mention as it wasn't in the Apr 14 table for EU directly
-                    countermeasures: "Delayed until July 14 (effective Apr. 10, 2025): additional duties ranging from 4.4% to 50% will be imposed on €8 billion worth of goods (see Annexes I and II to Implementing Regulation (EU) 2018/886 and Article 1(2) of Implementing Regulation (EU) 2020/502)\nDelayed until Aug. 14 (effective Apr. 10, 2025): 25% ad valorem tariffs on the U.S.-origin goods listed in Annexes II and III to Implementing Regulation (EU) 2025/778\nEffective Dec. 1: 25% ad valorem tariffs on the U.S.-origin goods listed in Annex IV to Implementing Regulation (EU) 2025/778" // Updated Dates
+                    info: "During a cabinet meeting on February 26, President Trump said the announcement will be made “very soon.”\nDefending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)",
+                    countermeasures: "Delayed until July 14 (effective Apr. 10, 2025): additional duties ranging from 4.4% to 50% will be imposed on €8 billion worth of goods (see Annexes I and II to Implementing Regulation (EU) 2018/886 and Article 1(2) of Implementing Regulation (EU) 2020/502)\nDelayed until Aug. 14 (effective Apr. 10, 2025): 25% ad valorem tariffs on the U.S.-origin goods listed in Annexes II and III to Implementing Regulation (EU) 2025/778\nEffective Dec. 1: 25% ad valorem tariffs on the U.S.-origin goods listed in Annex IV to Implementing Regulation (EU) 2025/778"
                 },
-                "Falkland Islands": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "42%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Fiji": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "32%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "France": { status: "Threatened (Feb. 21, 2025)", rate: "TBD", scope: "TBD", info: "See also EU\nDefending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)\nUSTR may renew Section 301 investigation to address DSTs", countermeasures: null }, // Assuming N/A if blank
-                "Guyana": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "38%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "India": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)\nThreatened to start Apr. 2 (Mar. 24, 2025)", rate: "27%\n25%", scope: "All products (see exceptions below)\nAll products", info: "Purchaser of Venezuelan oil, which may trigger additional tariffs", countermeasures: null }, // Assuming N/A if blank
-                "Indonesia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "32%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Iraq": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "39%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Israel": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "17%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Japan": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "24%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Jordan": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "20%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Kazakhstan": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "27%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Laos": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "48%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Lesotho": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "50%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Libya": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "31%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Liechtenstein": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "37%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Madagascar": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "47%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Malaysia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)\nThreatened to start Apr. 2 (Mar. 24, 2025)", rate: "24%\n25%", scope: "All products (see exceptions below)\nAll products", info: "Purchaser of Venezuelan oil, which may trigger additional tariffs", countermeasures: null }, // Assuming N/A if blank
-                "Mauritius": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "40%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
+                "Falkland Islands": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "42%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Fiji": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "32%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "France": { status: "Threatened (Feb. 21, 2025)", rate: "TBD", scope: "TBD", info: "See also EU\nDefending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)\nUSTR may renew Section 301 investigation to address DSTs", countermeasures: null },
+                "Guyana": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "38%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "India": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)\nThreatened to start Apr. 2 (Mar. 24, 2025)", rate: "27%\n25%", scope: "All products (see exceptions below)\nAll products", info: "Purchaser of Venezuelan oil, which may trigger additional tariffs", countermeasures: null },
+                "Indonesia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "32%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Iraq": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "39%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Israel": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "17%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Japan": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "24%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Jordan": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "20%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Kazakhstan": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "27%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Laos": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "48%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Lesotho": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "50%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Libya": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "31%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Liechtenstein": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "37%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Madagascar": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "47%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Malaysia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)\nThreatened to start Apr. 2 (Mar. 24, 2025)", rate: "24%\n25%", scope: "All products (see exceptions below)\nAll products", info: "Purchaser of Venezuelan oil, which may trigger additional tariffs", countermeasures: null },
+                "Mauritius": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "40%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
                 "Mexico": {
                     status: "Implemented (effective Mar. 4, 2025; adjusted Mar. 5, 2025)",
                     rate: "0%\n10%\n25%",
                     scope: "Goods entered duty free under the USMCA, effective Mar. 7, 2025\nPotash that is not entered duty free under the USMCA, effective Mar. 7, 2025\nAll other products",
                     info: "See related publications below\nReciprocal tariff exemption: imports not subject to reciprocal tariffs at this time\nDe minimis exemption remains available until further notice\nExec. Order 14232 (Mar. 6, 2025)\nExec. Order 14198 (Feb. 3, 2025)\nExec. Order 14194 (Feb. 1, 2025)",
-                    countermeasures: null // Explicitly N/A as per table
+                    countermeasures: null
                 },
-                "Moldova": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "31%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Mozambique": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "16%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Myanmar (Burma)": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "45%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Namibia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "21%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Nicaragua": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "19%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Nigeria": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "14%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "North Korea": { status: "Reciprocal tariff exemption: imports not subject to reciprocal tariffs at this time", rate: null, scope: null, info: null, countermeasures: null }, // Assuming N/A if blank
-                "North Macedonia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "33%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Norway": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "16%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Pakistan": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "30%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Philippines": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "18%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Russia": { status: "Threatened (Jan. 22, 2025)\nThreatened to start Apr. 2 (Mar. 24, 2025)", rate: "TBD\n25%", scope: "TBD\nAll products", info: "Reciprocal tariff exemption: imports not subject to reciprocal tariffs at this time\nPurchaser of Venezuelan oil, which may trigger additional tariffs", countermeasures: null }, // Assuming N/A if blank
-                "South Africa": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "31%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "South Korea": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "26%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Singapore": { status: "Threatened to start Apr. 2 (Mar. 24, 2025)", rate: "25%", scope: "All products", info: "Purchaser of Venezuelan oil, which may trigger additional tariffs", countermeasures: null }, // Assuming N/A if blank
-                "Spain": { status: "Threatened (Feb. 21, 2025)\nThreatened to start Apr. 2 (Mar. 24, 2025)", rate: "TBD\n25%", scope: "TBD\nAll products", info: "See also EU\nPurchaser of Venezuelan oil, which may trigger additional tariffs\nDefending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)\nUSTR may renew Section 301 investigation to address DSTs", countermeasures: null }, // Assuming N/A if blank
-                "Sri Lanka": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "44%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Switzerland": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "32%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Taiwan": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "32%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Thailand": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "37%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Tunisia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "28%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Turkey": { status: "Threatened (Feb. 21, 2025)", rate: "TBD", scope: "TBD", info: "Defending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)\nUSTR may renew Section 301 investigation to address DSTs", countermeasures: null }, // Assuming N/A if blank
-                "United Kingdom": { status: "Threatened (Feb. 21, 2025)", rate: "TBD", scope: "TBD", info: "Defending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)\nUSTR may renew Section 301 investigation to address DSTs", countermeasures: null }, // Assuming N/A if blank
-                "Venezuela": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "15%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Vietnam": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)\nThreatened to start Apr. 2 (Mar. 24, 2025)", rate: "46%\n25%", scope: "All products (see exceptions below)\nAll products", info: "Purchaser of Venezuelan oil, which may trigger additional tariffs", countermeasures: null }, // Assuming N/A if blank
-                "Zambia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "17%", scope: "All products (see exceptions below)", info: null, countermeasures: null }, // Assuming N/A if blank
-                "Zimbabwe": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "18%", scope: "All products (see exceptions below)", info: null, countermeasures: null } // Assuming N/A if blank
+                "Moldova": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "31%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Mozambique": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "16%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Myanmar (Burma)": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "45%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Namibia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "21%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Nicaragua": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "19%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Nigeria": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "14%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "North Korea": { status: "Reciprocal tariff exemption: imports not subject to reciprocal tariffs at this time", rate: null, scope: null, info: null, countermeasures: null },
+                "North Macedonia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "33%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Norway": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "16%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Pakistan": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "30%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Philippines": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "18%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Russia": { status: "Threatened (Jan. 22, 2025)\nThreatened to start Apr. 2 (Mar. 24, 2025)", rate: "TBD\n25%", scope: "TBD\nAll products", info: "Reciprocal tariff exemption: imports not subject to reciprocal tariffs at this time\nPurchaser of Venezuelan oil, which may trigger additional tariffs", countermeasures: null },
+                "South Africa": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "31%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "South Korea": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "26%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Singapore": { status: "Threatened to start Apr. 2 (Mar. 24, 2025)", rate: "25%", scope: "All products", info: "Purchaser of Venezuelan oil, which may trigger additional tariffs", countermeasures: null },
+                "Spain": { status: "Threatened (Feb. 21, 2025)\nThreatened to start Apr. 2 (Mar. 24, 2025)", rate: "TBD\n25%", scope: "TBD\nAll products", info: "See also EU\nPurchaser of Venezuelan oil, which may trigger additional tariffs\nDefending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)\nUSTR may renew Section 301 investigation to address DSTs", countermeasures: null },
+                "Sri Lanka": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "44%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Switzerland": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "32%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Taiwan": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "32%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Thailand": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "37%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Tunisia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "28%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Turkey": { status: "Threatened (Feb. 21, 2025)", rate: "TBD", scope: "TBD", info: "Defending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)\nUSTR may renew Section 301 investigation to address DSTs", countermeasures: null },
+                "United Kingdom": { status: "Threatened (Feb. 21, 2025)", rate: "TBD", scope: "TBD", info: "Defending American Corporations and Innovators from Overseas Extortion Memo (Feb. 21, 2025)\nUSTR may renew Section 301 investigation to address DSTs", countermeasures: null },
+                "Venezuela": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "15%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Vietnam": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)\nThreatened to start Apr. 2 (Mar. 24, 2025)", rate: "46%\n25%", scope: "All products (see exceptions below)\nAll products", info: "Purchaser of Venezuelan oil, which may trigger additional tariffs", countermeasures: null },
+                "Zambia": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "17%", scope: "All products (see exceptions below)", info: null, countermeasures: null },
+                "Zimbabwe": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025)", rate: "18%", scope: "All products (see exceptions below)", info: null, countermeasures: null }
             };
+
+            // 2. Product-Specific Tariff Data
+            const productTariffData = [
+                 { product: "Agricultural products", status: "Threatened to start Apr. 2 (Mar. 3, 2025)", rate: "TBD", scope: "TBD", info: null },
+                 { product: "Aluminum", status: "Implemented (effective Mar. 12, 2025)", rate: "25%", scope: "See HTSUS Chapter 99, Notes 19(g) and 19(i)-(k)\nEffective Apr. 4: includes beer (2203.00.00, HTSUS) and empty aluminum cans (7612.90.10, HTSUS)", info: "See related publications below\nReciprocal tariff exception: aluminum and derivative products subject to Section 232 tariffs are not subject to the reciprocal tariffs\nAll country exclusions from the existing Section 232 tariffs on aluminum and derivative aluminum articles are revoked.\nIndividual exclusions and General Authorized Exclusions are also being revoked.\nIncreases the tariff rate from 10% to 25%.\nExpands the list of derivative products subject to the tariffs (effective Mar. 12, 2025).\nProclamation 10895 (Feb. 10, 2025)" },
+                 { product: "Automobiles", status: "Implemented (effective Apr. 3, 2025)", rate: "25%", scope: "See HTSUS Chapter 99, notes 33(a)-(e)", info: "Reciprocal tariff exception: automobiles subject to Section 232 tariffs are not subject to the reciprocal tariffs\nFor automobiles that qualify for preferential treatment under the USMCA, the tariff will apply to the non-U.S. content.\nProclamation 10908 (Mar. 26, 2025)" },
+                 { product: "Automobile parts", status: "Implemented (effective May 3, 2025)", rate: "25%", scope: "See HTSUS Chapter 99, notes 33(g)-(h)", info: "Reciprocal tariff exception: automobile parts subject to Section 232 tariffs at the time of import are not subject to the reciprocal tariffs\nParts that qualify for preferential treatment under the USMCA will initially be exempt. The Commerce Department will establish a process for applying the tariff exclusively to the value of the non-U.S. content in these parts and then publish notice of that process in the Federal Register.\nBy June 24, 2025, the Commerce Department will establish a process for including additional parts within the scope of this tariff.\nProclamation 10908 (Mar. 26, 2025)" },
+                 { product: "Copper", status: "Threatened (Feb. 25, 2025)", rate: "25%", scope: "TBD", info: "Commerce initiated a Section 232 investigation. A report is due to the President by November 22, 2025.\nExec. Order 14220 (Feb. 25, 2025)" },
+                 { product: "Integrated circuits", status: "Threatened (Jan. 31, 2025)", rate: "TBD", scope: "TBD", info: null },
+                 { product: "Lumber, timber, and derivative products", status: "Threatened (Mar. 3, 2025)", rate: "25%", scope: "TBD", info: "Commerce initiated a Section 232 investigation. A report is due to the President by November 26, 2025.\nExec. Order 14223 (Mar. 1, 2025)" },
+                 { product: "Maritime cargo handling equipment", status: "Threatened (Apr. 9, 2025)", rate: "TBD", scope: "TBD", info: "As part of the USTR’s Section 301 investigation into China’s targeting of the maritime, logistics, and shipbuilding sectors, President Trump directed the USTR to consider tariffs on (a) ship-to-shore cranes manufactured, assembled, or made using Chinese-origin components, or manufactured anywhere in the world by a company owned, controlled, or substantially influenced by a Chinese national; and (b) other cargo handling equipment.\nExecutive Order (Apr. 9, 2025)" },
+                 { product: "Oil and gas", status: "Threatened to start Feb. 18, 2025 (Jan. 31, 2025)", rate: "TBD", scope: "TBD", info: null },
+                 { product: "Medicine and pharmaceuticals", status: "Threatened (Feb. 18, 2025)", rate: "25% or higher", scope: "TBD", info: "Expected to “go very substantially higher over the course of a year,” according to Trump." },
+                 { product: "Semiconductors", status: "Threatened (Feb. 18, 2025)", rate: "25% or higher", scope: "TBD", info: "Expected to “go very substantially higher over the course of a year,” according to Trump." },
+                 { product: "Steel", status: "Implemented (effective Mar. 12, 2025)", rate: "25%", scope: "See HTSUS Chapter 99, notes 16(j), 16(l)-(m)", info: "See related publications below\nReciprocal tariff exception: steel and derivative products subject to Section 232 tariffs are not subject to the reciprocal tariffs\nAll country exclusions from the existing Section 232 tariffs on aluminum and derivative aluminum articles are revoked. Individual exclusions and General Authorized Exclusions are also being revoked.\nExpands the list of derivative products subject to the tariffs (effective Mar. 12, 2025).\nProclamation 10896 (Feb. 10, 2025)" }
+            ];
+
+            // 3. Reciprocal Tariff Exceptions Data
+            const exceptionsData = `
+The reciprocal tariffs do not apply in the following circumstances:
+• Goods loaded onto a vessel at the port of loading and in transit on the final mode of transport before the reciprocal tariffs take effect will not be subject to the baseline or country-specific ad valorem tariffs (as applicable).
+• Articles and derivatives of steel and aluminum that are already subject to Section 232 tariffs are excluded.
+• Automobiles and automobile parts that are subject to Section 232 tariffs at the time of import are excluded.
+• Additional articles listed in Annex II to the executive order, including copper, pharmaceuticals, semiconductors, lumber articles, certain critical minerals, and energy and energy products, are excluded. On April 11, President Trump expanded Annex II to include additional Harmonized Tariff Schedule of the United States (HTSUS) headings and subheadings covering smartphones, computers, and other electronics.
+            `;
+
+            // 4. Updates and Relevant Publications Data
+            const updatesData = [
+                 { date: "Apr. 11, 2025", detail: "President Trump issued a presidential memorandum to expand the reciprocal tariff exceptions to include the following HTSUS headings and subheadings:  8471, 8473.30, 8486, 8517.13.00, 8517.62.00, 8523.51.00, 8524, 8528.52.00, 8541.10.00, 8541.21.00, 8541.29.00, 8541.30.00, 8541.49.10, 8541.49.70, 8541.49.80, 8541.49.95, 8541.51.00, 8541.59.00, 8541.90.00, and 8542. U.S. Customs and Border Protection (CBP) will issue refunds for any tariffs collected on imports classified under these headings or subheadings since April 5." },
+                 { date: "Apr. 9, 2025", detail: "President Trump signed an executive order increasing the tariffs that will be imposed on imports of Chinese-origin goods that would otherwise qualify for the de minimis exemption, effective May 2. Goods sent through the international postal network will be subject to duties of (a) 120% ad valorem or (b) $100 per item. The per item dollar amount will increase to $200, effective at 12:01 a.m. (ET) on June 1." },
+                 { date: "Apr. 8, 2025", detail: "President Trump signed an executive order increasing the tariffs that will be imposed on imports of Chinese-origin goods that would otherwise qualify for the de minimis exemption, effective May 2. Goods sent through the international postal network will be subject to duties of (a) 90% ad valorem or (b) $75 per item. The per item dollar amount will increase to $150, effective at 12:01 a.m. (ET) on June 1." },
+                 { date: "Apr. 8, 2025", detail: "CBP released guidance indicating that the reciprocal tariff savings clause for imports otherwise subject to country-specific tariff rates will also remain in effect until 12:00 a.m. (ET) on May 27." },
+                 { date: "Apr. 4, 2025", detail: "CBP released guidance indicating that the reciprocal tariff savings clause for imports on or after 12:01 a.m. (ET) on April 5 will remain in effect until 12:00 a.m. (ET) on May 27. The savings clause applies to goods loaded onto a vessel at the port of loading and in transit on the final mode of transport before entry into the United States before 12:01 a.m. (ET) on April 5." },
+                 { date: "Apr. 2, 2025", detail: "U.S. imposes 10% baseline tariffs; higher reciprocal tariffs for targeted countries (updated Apr. 3, 2025)" },
+                 { date: "Mar. 28, 2025", detail: "What impact will President Trump’s reciprocal tariffs have on the United Kingdom?" },
+                 { date: "Mar. 27, 2025", detail: "In response to the new U.S. tariffs on automobiles and automobile parts, the Chair of the International Trade Committee in the European Parliament suggested placing tariffs on U.S. digital services." },
+                 { date: "Mar. 25: 2025", detail: "Tariff mitigation through alternative sourcing: Navigating customs country of origin compliance risks" },
+                 { date: "Mar. 24, 2025", detail: "President Trump signed an executive order granting the Secretary of State discretion to impose a 25% tariff on imports of goods from any country that directly or indirectly purchases Venezuelan oil, effective April 2, 2025. Unless terminated earlier, the tariffs will expire on year after the last date on which the country imported Venezuelan oil. “Venezuelan oil” means crude oil or petroleum products extracted, refined, or exported from Venezuela, regardless of the nationality of the entity involved in the production or sale of such crude oil or petroleum products." },
+                 { date: "Mar. 11, 2025", detail: "The Commerce Department initiated Section 232 investigations into imports of copper and timber and lumber. The deadline to submit comments is April 1, 2025." },
+                 { date: "Mar. 3, 2025", detail: "The following Federal Register notices implementing the following tariffs were made available for public inspection: (1)  adjusted Section 232 tariffs on steel imports; (2) adjusted Section 232 tariffs on aluminum imports; (3) tariffs on imports of Canadian-origin goods; and (4) tariffs on imports of Mexican-origin goods." },
+                 { date: "Feb. 25, 2025", detail: "The USTR is seeking public comments, on a country-by-country basis, about any unfair trade practice or non-reciprocal trade arrangement. The deadline to submit comments is March 11, 2025." },
+                 { date: "Feb. 17, 2025", detail: "The EU released a Q&A document on the United States’ reciprocal tariff policy. The document does not outline specific countermeasures the EU intends to implement but does indicate that the EU remains open to negotiations with the U.S. on balanced trade." },
+                 { date: "Feb. 11, 2025", detail: "Trump adjusts steel and aluminum tariff; directs Customs to increase enforcement" },
+                 { date: "Feb. 4, 2025", detail: "U.S. and China in tariff tit for tat; Canadian and Mexican tariffs delayed" },
+                 { date: "Feb. 3, 2025", detail: "U.S. imposes tariffs on Canada, China, and Mexico; retaliation promised" },
+                 { date: "Jan. 28, 2025", detail: "Key investigations and enforcement trends: Top takeaways for 2025" },
+                 { date: "Nov. 6, 2024", detail: "International trade in a second Trump presidency" }
+            ];
 
 
             // --- DOM Elements ---
             const countrySelect = document.getElementById('country-select');
             const tariffInfoDiv = document.getElementById('tariff-info');
+            const countrySelectorContainer = document.getElementById('country-selector-container');
+
+            // Navigation Buttons
+            const navButtons = {
+                country: document.getElementById('nav-country'),
+                product: document.getElementById('nav-product'),
+                exceptions: document.getElementById('nav-exceptions'),
+                updates: document.getElementById('nav-updates')
+            };
+
+            let currentView = 'country'; // Track the active view
 
             // --- Functions ---
 
             /**
-             * Populates the dropdown with country names from the tariffData object.
+             * Populates the country dropdown.
              */
             function populateDropdown() {
                 if (!countrySelect) {
-                    console.error("Error: Could not find the country select dropdown element (ID: country-select).");
-                    return; // Exit if the select element isn't found
+                    console.error("Error: Could not find country select dropdown.");
+                    return;
                 }
-                console.log("Populating dropdown..."); // Debug log 2
-
-                // Clear any existing options except the first default one
-                const defaultOption = countrySelect.options[0]; // Keep the "-- Select --" option
-                countrySelect.innerHTML = ''; // Clear all options
-                countrySelect.appendChild(defaultOption); // Add the default option back
+                const defaultOption = countrySelect.options[0];
+                countrySelect.innerHTML = '';
+                countrySelect.appendChild(defaultOption);
 
                 try {
-                    // Get country names, sort them, but ensure "All" is first if present
-                    const countries = Object.keys(tariffData).sort((a, b) => {
-                        if (a === "All") return -1; // "All" comes first
+                    const countries = Object.keys(countryTariffData).sort((a, b) => {
+                        if (a === "All") return -1;
                         if (b === "All") return 1;
-                        return a.localeCompare(b); // Alphabetical sort for the rest
+                        return a.localeCompare(b);
                     });
 
                     countries.forEach(country => {
-                        // Only add countries that have data in the updated list
-                        if (tariffData[country]) {
+                        if (countryTariffData[country]) {
                              const option = document.createElement('option');
                              option.value = country;
                              option.textContent = country;
-                             countrySelect.appendChild(option); // Add the new option
+                             countrySelect.appendChild(option);
                         }
                     });
-                    console.log(`Successfully populated dropdown with ${countrySelect.options.length -1} countries.`); // Debug log 3 (adjust count)
+                    console.log(`Populated dropdown with ${countrySelect.options.length -1} countries.`);
                 } catch (error) {
-                     console.error("Error during dropdown population:", error); // Debug log for errors during population
+                     console.error("Error during dropdown population:", error);
                 }
             }
 
             /**
-             * Displays the tariff information for the selected country.
+             * Displays country-specific tariff information.
              * @param {string} countryName - The name of the selected country.
              */
-            function displayTariffInfo(countryName) {
-                if (!tariffInfoDiv) {
-                    console.error("Error: Could not find the tariff info display element (ID: tariff-info).");
-                    return; // Exit if the display div isn't found
-                }
-                // Clear previous info and reset styles
-                tariffInfoDiv.innerHTML = '';
-                // Reset class list to default state (not centered initially)
-                tariffInfoDiv.className = 'mt-6 p-5 bg-gray-900 bg-opacity-70 rounded-lg border border-gray-700 min-h-[200px]';
+            function displayCountryInfo(countryName) {
+                 tariffInfoDiv.innerHTML = ''; // Clear previous content
+                 tariffInfoDiv.className = 'mt-6 p-5 bg-gray-900 bg-opacity-70 rounded-lg border border-gray-700 min-h-[200px]'; // Reset classes
 
-                if (!countryName) {
-                    // If no country is selected (e.g., the default "-- Select --" option)
+                 if (!countryName) {
                     tariffInfoDiv.innerHTML = '<p class="text-gray-400 text-center text-lg italic">Select a country from the dropdown to view tariff information.</p>';
-                    // Add centering classes only for the prompt message
-                    tariffInfoDiv.classList.add('flex', 'items-center', 'justify-center');
+                    tariffInfoDiv.classList.add('flex', 'items-center', 'justify-center'); // Center prompt
                     return;
-                }
+                 }
 
-                console.log(`Country selected: ${countryName}`); // Debug log 4
-                const data = tariffData[countryName];
+                 const data = countryTariffData[countryName];
+                 if (!data) {
+                     tariffInfoDiv.innerHTML = '<p class="text-red-400 text-center">Error: Tariff information not found.</p>';
+                     tariffInfoDiv.classList.add('flex', 'items-center', 'justify-center'); // Center error
+                     return;
+                 }
 
-                if (!data) {
-                    // Handle case where data might be missing (shouldn't happen with dropdown population)
-                    tariffInfoDiv.innerHTML = '<p class="text-red-400 text-center">Error: Tariff information not found for the selected country.</p>';
-                    // Add centering classes for the error message
-                    tariffInfoDiv.classList.add('flex', 'items-center', 'justify-center');
-                    return;
-                }
-
-                // Create HTML content for the selected country's data
-                // Using Tailwind classes for styling within the generated HTML
-                // Added info-paragraph class for better text wrapping
-                // Ensured all fields display 'N/A' if data is missing/null/empty string
-                tariffInfoDiv.innerHTML = `
+                 // Build HTML for country details
+                 tariffInfoDiv.innerHTML = `
                     <div class="space-y-3 text-left">
-                        <div>
-                            <h3 class="text-lg font-semibold text-blue-300 mb-1">Status:</h3>
-                            <p class="text-gray-200 info-paragraph">${data.status || 'N/A'}</p>
+                        <div><h3 class="text-lg font-semibold text-blue-300 mb-1">Status:</h3><p class="text-gray-200 info-paragraph">${data.status || 'N/A'}</p></div>
+                        <div><h3 class="text-lg font-semibold text-blue-300 mb-1">Ad Valorem Tariff Rate:</h3><p class="text-gray-200 info-paragraph">${data.rate || 'N/A'}</p></div>
+                        <div><h3 class="text-lg font-semibold text-blue-300 mb-1">Scope:</h3><p class="text-gray-200 info-paragraph">${data.scope || 'N/A'}</p></div>
+                        <div><h3 class="text-lg font-semibold text-blue-300 mb-1">Additional Information:</h3><p class="text-gray-300 text-sm info-paragraph">${data.info || 'N/A'}</p></div>
+                        <div><h3 class="text-lg font-semibold text-blue-300 mb-1">Countermeasures Announced:</h3><p class="text-gray-300 text-sm info-paragraph">${data.countermeasures || 'N/A'}</p></div>
+                    </div>`;
+            }
+
+            /**
+             * Displays product-specific tariff information.
+             */
+            function displayProductInfo() {
+                tariffInfoDiv.innerHTML = ''; // Clear previous content
+                tariffInfoDiv.className = 'mt-6 p-5 bg-gray-900 bg-opacity-70 rounded-lg border border-gray-700 min-h-[200px]'; // Reset classes
+
+                let content = '<h2 class="text-xl font-semibold text-blue-300 mb-4 text-center">Worldwide, Product-Specific Tariffs</h2><div class="space-y-5">'; // Start content
+
+                productTariffData.forEach(item => {
+                    content += `
+                        <div class="border-b border-gray-700 pb-3">
+                            <h3 class="text-lg font-semibold text-gray-100 mb-1">${item.product || 'N/A'}</h3>
+                            <p class="text-sm text-gray-300 mb-1"><span class="font-medium text-gray-100">Status:</span> ${item.status || 'N/A'}</p>
+                            <p class="text-sm text-gray-300 mb-1"><span class="font-medium text-gray-100">Rate:</span> ${item.rate || 'N/A'}</p>
+                            <p class="text-sm text-gray-300 mb-1"><span class="font-medium text-gray-100">Scope:</span> ${item.scope || 'N/A'}</p>
+                            ${item.info ? `<p class="text-xs text-gray-400 mt-2 info-paragraph"><span class="font-medium text-gray-100">Info:</span> ${item.info}</p>` : ''}
                         </div>
-                        <div>
-                            <h3 class="text-lg font-semibold text-blue-300 mb-1">Ad Valorem Tariff Rate:</h3>
-                            <p class="text-gray-200 info-paragraph">${data.rate || 'N/A'}</p>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-semibold text-blue-300 mb-1">Scope:</h3>
-                            <p class="text-gray-200 info-paragraph">${data.scope || 'N/A'}</p>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-semibold text-blue-300 mb-1">Additional Information:</h3>
-                            <p class="text-gray-300 text-sm info-paragraph">${data.info || 'N/A'}</p>
-                        </div>
-                         <div>
-                            <h3 class="text-lg font-semibold text-blue-300 mb-1">Countermeasures Announced:</h3>
-                            <p class="text-gray-300 text-sm info-paragraph">${data.countermeasures || 'N/A'}</p>
-                        </div>
-                    </div>
+                    `;
+                });
+
+                content += '</div>'; // End content
+                tariffInfoDiv.innerHTML = content;
+            }
+
+             /**
+             * Displays reciprocal tariff exceptions.
+             */
+            function displayExceptionsInfo() {
+                tariffInfoDiv.innerHTML = ''; // Clear previous content
+                tariffInfoDiv.className = 'mt-6 p-5 bg-gray-900 bg-opacity-70 rounded-lg border border-gray-700 min-h-[200px]'; // Reset classes
+
+                tariffInfoDiv.innerHTML = `
+                    <h2 class="text-xl font-semibold text-blue-300 mb-4 text-center">Reciprocal Tariff Exceptions</h2>
+                    <p class="text-gray-300 text-sm info-paragraph">${exceptionsData.trim() || 'N/A'}</p>
                 `;
             }
 
+            /**
+             * Displays updates and publications.
+             */
+            function displayUpdatesInfo() {
+                tariffInfoDiv.innerHTML = ''; // Clear previous content
+                tariffInfoDiv.className = 'mt-6 p-5 bg-gray-900 bg-opacity-70 rounded-lg border border-gray-700 min-h-[200px]'; // Reset classes
+
+                let content = '<h2 class="text-xl font-semibold text-blue-300 mb-4 text-center">Updates & Relevant Publications</h2><div class="space-y-4">'; // Start content
+
+                updatesData.forEach(item => {
+                    content += `
+                        <div class="border-b border-gray-700 pb-2">
+                            <p class="text-sm font-semibold text-gray-100 mb-1">${item.date || 'N/A'}</p>
+                            <p class="text-xs text-gray-400 info-paragraph">${item.detail || 'N/A'}</p>
+                        </div>
+                    `;
+                });
+
+                content += '</div>'; // End content
+                tariffInfoDiv.innerHTML = content;
+            }
+
+            /**
+             * Updates the view based on the selected navigation button.
+             * @param {string} viewType - The type of view to display ('country', 'product', 'exceptions', 'updates').
+             */
+            function switchView(viewType) {
+                currentView = viewType;
+
+                // Update button styles
+                Object.keys(navButtons).forEach(key => {
+                    if (key === viewType) {
+                        navButtons[key].classList.remove('nav-button-inactive');
+                        navButtons[key].classList.add('nav-button-active');
+                    } else {
+                        navButtons[key].classList.remove('nav-button-active');
+                        navButtons[key].classList.add('nav-button-inactive');
+                    }
+                });
+
+                // Show/hide country selector and display corresponding info
+                if (viewType === 'country') {
+                    countrySelectorContainer.classList.remove('hidden-smooth');
+                    // Display info for the currently selected country (or prompt if none)
+                    displayCountryInfo(countrySelect.value);
+                } else {
+                    countrySelectorContainer.classList.add('hidden-smooth');
+                    if (viewType === 'product') {
+                        displayProductInfo();
+                    } else if (viewType === 'exceptions') {
+                        displayExceptionsInfo();
+                    } else if (viewType === 'updates') {
+                        displayUpdatesInfo();
+                    }
+                }
+            }
+
             // --- Event Listeners ---
-             if (countrySelect) {
-                // Add event listener for when the selection changes
+
+            // Country Dropdown Change
+            if (countrySelect) {
                 countrySelect.addEventListener('change', (event) => {
-                    const selectedCountry = event.target.value;
-                    displayTariffInfo(selectedCountry); // Update the display
+                    // Only update if the current view is 'country'
+                    if (currentView === 'country') {
+                         displayCountryInfo(event.target.value);
+                    }
                 });
             } else {
                  console.error("Could not attach event listener: countrySelect element not found.");
             }
 
+            // Navigation Button Clicks
+            Object.keys(navButtons).forEach(key => {
+                navButtons[key].addEventListener('click', () => switchView(key));
+            });
+
 
             // --- Initialization ---
             populateDropdown(); // Fill the dropdown on page load
-            displayTariffInfo(''); // Show the initial prompt message
+            switchView('country'); // Start with the country view and prompt
 
         });
     </script>
