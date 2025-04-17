@@ -1,4 +1,3 @@
-Trump Tariff Tracker
 Trump Tariff Tracker is a web application designed to help users easily access and understand potential tariff details related to the Trump administration’s trade policies. The tool provides up-to-date information on country-specific and product-specific tariffs, exceptions, and recent updates or publications. Data is based on analysis as of April 14, 2025.
 
 **Features**
