@@ -55,24 +55,35 @@
         }
         /* Styling for navigation buttons */
         .nav-button {
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.1s ease;
+            transition: background 0.3s, color 0.3s, transform 0.1s;
             transform-origin: center;
+            background: linear-gradient(90deg, #2563eb 0%, #7c3aed 50%, #db2777 100%);
+            color: #e2e8f0;
+            font-weight: 500;
+            border: none;
+            box-shadow: 0 2px 8px 0 rgba(59,130,246,0.08);
         }
         .nav-button-active {
-            background-color: #4a5568; /* gray-600 */
-            color: #e2e8f0; /* gray-200 */
-            font-weight: 600;
-            transform: scale(1.05);
+            background: linear-gradient(90deg, #2563eb 0%, #7c3aed 50%, #db2777 100%);
+            color: #fff;
+            font-weight: 700;
+            border: 2px solid #fff;
+            transform: scale(1.07);
+            box-shadow: 0 4px 16px 0 rgba(59,130,246,0.18);
         }
         .nav-button-inactive {
-             background-color: #2d3748; /* gray-800 */
-             color: #a0aec0; /* gray-400 */
+            background: linear-gradient(90deg, #334155 0%, #4f46e5 50%, #be185d 100%);
+            color: #e0e7ef;
+            border: 2px solid #64748b;
+            opacity: 0.93;
         }
-         .nav-button-inactive:hover {
-             background-color: #4a5568; /* gray-600 */
-             color: #e2e8f0; /* gray-200 */
-             transform: scale(1.03);
-         }
+        .nav-button-inactive:hover {
+            background: linear-gradient(90deg, #2563eb 0%, #7c3aed 50%, #db2777 100%);
+            color: #fff;
+            border: 2px solid #fff;
+            transform: scale(1.04);
+            opacity: 1;
+        }
          /* Hide element smoothly */
          .hidden-smooth {
              display: none;
@@ -187,6 +198,15 @@
         <button id="nav-glossary" class="nav-button nav-button-inactive px-3 py-2 rounded-md text-xs sm:text-sm md:text-base">Glossary</button>
         <button id="nav-exceptions" class="nav-button nav-button-inactive px-3 py-2 rounded-md text-xs sm:text-sm md:text-base">Exceptions</button>
     </nav>
+    <!-- Add the article button below the navigation bar -->
+    <div class="w-full max-w-6xl flex justify-center mb-6">
+        <a href="https://www.linkedin.com/pulse/what-role-do-trump-tariffs-play-procurement-decisions-kronosgroup-bpccc/"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-3 rounded-md shadow-md transition-all duration-200 text-sm md:text-base text-center w-full md:w-auto">
+            What role do Trump Tariffs play in procurement decisions?
+        </a>
+    </div>
 
     <main class="w-full max-w-6xl bg-gray-800 bg-opacity-60 backdrop-blur-lg rounded-lg shadow-2xl p-4 md:p-8 min-h-[400px]">
 
@@ -212,9 +232,9 @@
             <p>
                 <a href="https://www.whitehouse.gov/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline mx-1">White House</a> |
                 <a href="https://ustr.gov/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline mx-1">USTR</a> |
-                <a href="https://www.tradecomplianceresourcehub.com/2025/04/14/trump-2-0-tariff-tracker/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline mx-1">Initial Source Example</a>
+                <a href="https://www.tradecomplianceresourcehub.com/2025/04/14/trump-2-0-tariff-tracker/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline mx-1">Reed Smith Article Source</a>
             </p>
-             <p class="mt-2 text-gray-500">Website created by Kapisch Bhardwaj.</p>
+             <p class="mt-2 text-gray-500">Website created by Kapisch Bhardwaj</p>
         </div>
     </footer>
 
