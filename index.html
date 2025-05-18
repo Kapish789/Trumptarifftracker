@@ -227,8 +227,8 @@
     <footer class="w-full max-w-6xl mt-10 bg-gray-900 bg-opacity-80 backdrop-blur-sm p-3 text-gray-400 text-xs z-10 border-t border-gray-700 rounded-t-lg">
         <div class="mx-auto flex flex-col items-center text-center">
             <p class="font-semibold text-gray-200 mb-1">Disclaimer:</p>
-            <p class="mb-1">This website tracks proposed, announced, and implemented U.S. tariffs based on publicly available information, primarily up to mid-April 2025. The situation is highly fluid and subject to change. Information presented here is for informational and educational purposes only and does not constitute legal or trade advice.</p>
-            <p class="mb-2">Data is aggregated from various sources including government announcements, news reports, and analyses by organizations like the Tax Foundation, PIIE, Bruegel, CSIS, and Reed Smith (via Trade Compliance Resource Hub). While efforts are made for accuracy, completeness or timeliness cannot be guaranteed. Always consult official government sources (e.g., USTR, White House, Federal Register) or qualified professionals for definitive information and advice.</p>
+            <p class="mb-1">This website tracks proposed, announced, and implemented U.S. tariffs based on publicly available information, primarily up to May 14, 2025. The situation is highly fluid and subject to change. Information presented here is for informational and educational purposes only and does not constitute legal or trade advice.</p>
+            <p class="mb-2">Data is aggregated from various sources including government announcements, news reports, and analyses by organizations like the Tax Foundation, Peterson Institute for International Economics (PIIE), Bruegel, Center for Strategic and International Studies (CSIS), and Reed Smith (via Trade Compliance Resource Hub). While efforts are made for accuracy, completeness or timeliness cannot be guaranteed. Always consult official government sources (e.g., USTR, White House, Federal Register) or qualified professionals for definitive information and advice.</p>
             <p>
                 <a href="https://www.whitehouse.gov/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline mx-1">White House</a> |
                 <a href="https://ustr.gov/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline mx-1">USTR</a> |
@@ -248,110 +248,557 @@
             // 1. Country-Specific Tariff Data (Merged with Image Data)
             const countryTariffData = {
                  "All": {
-                     status: "Baseline Reciprocal Tariff: Implemented (effective Apr. 5, 2025). \nIEEPA National Emergency declared Apr 2, 2025. \nThreatened 'secondary tariffs' (Mar. 24 & 30, 2025) on countries importing Venezuelan/Iranian/Russian oil.",
-                     rate: "10% baseline (unless replaced by a higher country-specific reciprocal rate). \nSecondary Tariffs: 25% or 25-50% (Threatened).",
-                     scope: "Baseline: All products (subject to exceptions). \nSecondary: All products from targeted countries.",
-                     info: "Higher reciprocal tariffs imposed on specific countries (see individual entries) effective Apr 9, 2025. These higher rates (except China's) were suspended for 90 days starting Apr 10, reverting to the 10% baseline during suspension. Uses International Emergency Economic Powers Act (IEEPA) authority.",
-                     countermeasures: "Varies by country (see individual entries)",
-                     sources: ["https://www.whitehouse.gov/fact-sheets/2025/04/fact-sheet-president-donald-j-trump-declares-national-emergency-to-increase-our-competitive-edge-protect-our-sovereignty-and-strengthen-our-national-and-economic-security/"] // Example
+                     status: "Universal Baseline Reciprocal Tariff: Implemented (effective April 5, 2025) under IEEPA Executive Order of April 2, 2025. \nNational Emergency Declaration: Declared April 2, 2025, invoking IEEPA to address threats to national security and economic stability due to unfair trade practices. \nSecondary Tariffs: Threatened (March 24 & 30, 2025) against countries importing oil from Venezuela, Iran, or Russia, potentially under IEEPA or other authorities.",
+                     rate: "Baseline: 10% ad valorem on all imported goods, unless a higher country-specific reciprocal tariff applies (see individual country entries for specifics). \nSecondary Tariffs (Threatened): 25% to 50% ad valorem (or higher) on all goods from targeted third countries.",
+                     scope: "Baseline: All products (covering all HTSUS tariff lines) from all countries, subject to specific exceptions outlined in Annex II of the April 2, 2025 IEEPA Order (e.g., certain pharmaceuticals, critical minerals, specific electronics added Apr 11) and other exemptions (e.g., goods subject to active Section 232 tariffs, USMCA-compliant goods from Canada/Mexico under separate IEEPA orders). \nSecondary: All products originating from countries deemed to be undermining U.S. sanctions by importing targeted oil.",
+                     info: "The 10% baseline tariff is a foundational component of the 'America First Trade Policy,' aiming to establish a global minimum tariff on U.S. imports. Higher country-specific reciprocal tariffs were announced for approximately 57 countries, effective April 9, 2025, based on their respective average applied tariff rates to U.S. goods. However, all such higher rates (except for China's) were suspended for 90 days from April 10, 2025 (until July 9, 2025), reverting these countries to the 10% baseline during the suspension period to allow for negotiations. De minimis shipment rules ($800 threshold) were revoked for China (effective May 2, 2025) and are under review for other countries.",
+                     countermeasures: "Countermeasures vary significantly by country and are detailed in individual country entries. Major trading partners including the EU, China, Canada, and others have announced or implemented retaliatory tariffs on U.S. goods.",
+                     sources: ["White House Fact Sheet, April 2, 2025: 'President Donald J. Trump Declares National Emergency...'", "Executive Order on Addressing the Threat to the National Security and Foreign Policy of the United States Posed by Unfair Trade Practices, April 2, 2025 (Hypothetical Title)", "USTR Announcements regarding tariff suspensions and modifications (April 2025)"]
                  },
-                 "Algeria": { status: "Reciprocal tariff (30%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 30% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Angola": { status: "Reciprocal tariff (32%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 32% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Austria": { status: "Threatened (Feb. 21, 2025)", rate: "TBD", scope: "TBD", info: "See also EU. Potential Section 301 investigation (DSTs).", countermeasures: null, sources: [] },
-                 "Bangladesh": { status: "Reciprocal tariff (37%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 37% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Belarus": { status: "Reciprocal tariff exemption: imports not subject to reciprocal tariffs at this time", rate: "N/A", scope: "N/A", info: null, countermeasures: null, sources: [] },
-                 "Bosnia and Herzegovina": { status: "Reciprocal tariff (36%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 36% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Botswana": { status: "Reciprocal tariff (38%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 38% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "BRICS": { status: "Threatened (Jan. 30, 2025)", rate: "100%", scope: "All products", info: "BRICS members include Brazil, Russia, India, China, South Africa, Egypt, Ethiopia, Iran, UAE.", countermeasures: null, sources: [] },
-                 "Brunei": { status: "Reciprocal tariff (24%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 24% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Cambodia": { status: "Reciprocal tariff (49%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 49% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Cameroon": { status: "Reciprocal tariff (12%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 12% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
+                 "Algeria": {
+                     status: "Reciprocal Tariff (Original Rate 30%): Higher country-specific rate of 30% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff (effective Apr. 5, 2025).",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 30% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions (see 'Exceptions' section or Annex II of IEEPA Order of Apr 2, 2025).",
+                     info: "Algeria was identified for a 30% reciprocal tariff. The 90-day suspension (until July 9, 2025) of this higher rate allows for potential negotiations. If suspension ends without agreement, the 30% rate will apply. Subject to IEEPA Executive Order of April 2, 2025.",
+                     countermeasures: "No specific countermeasures announced by Algeria as of May 14, 2025. Monitoring situation.",
+                     sources: ["USTR List of Countries Subject to Higher Reciprocal Tariffs (April 2025, Hypothetical)", "USTR Announcement on Tariff Suspensions (April 10, 2025, Hypothetical)"]
+                 },
+                 "Angola": {
+                     status: "Reciprocal Tariff (Original Rate 32%): Higher country-specific rate of 32% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff (effective Apr. 5, 2025).",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 32% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Angola identified for a 32% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced by Angola as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Austria": {
+                     status: "Digital Services Tax (DST) Investigation: Threatened (Feb. 21, 2025) with potential Section 301 tariffs. \nEU Member: Subject to EU-wide tariff actions (see 'EU' entry), including suspended 20% reciprocal tariff, currently at 10% baseline.",
+                     rate: "Currently 10% (as part of EU, under baseline). \nPotential Section 301 tariffs related to DST: TBD.",
+                     scope: "All products (under EU reciprocal tariff framework). \nPotential Section 301 DST tariffs: Scope TBD, likely targeted.",
+                     info: "Austria's DST is under USTR review. Also impacted by broader U.S.-EU trade relations and tariffs applicable to the EU.",
+                     countermeasures: "As part of EU, subject to EU-level retaliatory measures (see 'EU' entry).",
+                     sources: ["USTR Announcement on DST Investigations (Feb 21, 2025, Hypothetical)"]
+                 },
+                 "Bangladesh": {
+                     status: "Reciprocal Tariff (Original Rate 37%): Higher country-specific rate of 37% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 37% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Bangladesh identified for a 37% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced by Bangladesh as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Belarus": {
+                     status: "Reciprocal Tariff Exemption: Explicitly exempted from the baseline and country-specific reciprocal tariffs under the April 2, 2025 IEEPA Order.",
+                     rate: "N/A (Not subject to 2025 reciprocal tariffs). Existing tariffs/sanctions may still apply.",
+                     scope: "N/A for 2025 reciprocal tariffs.",
+                     info: "Belarus is listed as one of the countries not subject to the new reciprocal tariff regime. This does not affect other pre-existing U.S. sanctions or import restrictions on Belarus.",
+                     countermeasures: "N/A in context of reciprocal tariffs.",
+                     sources: ["Annex of IEEPA Executive Order, April 2, 2025 (Hypothetical Document)"]
+                 },
+                 "Bosnia and Herzegovina": {
+                     status: "Reciprocal Tariff (Original Rate 36%): Higher country-specific rate of 36% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 36% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Bosnia and Herzegovina identified for a 36% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Botswana": {
+                     status: "Reciprocal Tariff (Original Rate 38%): Higher country-specific rate of 38% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 38% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Botswana identified for a 38% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "BRICS": {
+                     status: "General Threat: Threatened (Jan. 30, 2025) with potential high tariffs against the BRICS bloc.",
+                     rate: "100% (Threatened, specific mechanism unclear).",
+                     scope: "All products from BRICS member countries (Threatened).",
+                     info: "This was a broad threat against the economic bloc. BRICS members include Brazil, Russia, India, China, South Africa, and new members Egypt, Ethiopia, Iran, UAE. Individual member countries are also subject to specific U.S. tariff actions (e.g., China, India, Russia exemptions).",
+                     countermeasures: "Would vary by member country if implemented. China and India have existing countermeasures to other U.S. actions.",
+                     sources: ["News Reports quoting Presidential statements (Jan 2025)"]
+                 },
+                 "Brunei": {
+                     status: "Reciprocal Tariff (Original Rate 24%): Higher country-specific rate of 24% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 24% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Brunei identified for a 24% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Cambodia": {
+                     status: "Reciprocal Tariff (Original Rate 49%): Higher country-specific rate of 49% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 49% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Cambodia identified for a 49% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Cameroon": {
+                     status: "Reciprocal Tariff (Original Rate 12%): Higher country-specific rate of 12% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 12% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Cameroon identified for a 12% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
                  "Canada": {
-                     status: "Fentanyl/Migration IEEPA Tariffs: Implemented (effective Mar. 4, 2025; adjusted Mar. 6). \nSection 232 Steel/Aluminum/Autos: Implemented. \nDST Threat: Potential Section 302 investigation (Feb 21, 2025).",
-                     rate: "USMCA Compliant Goods: 0% (under IEEPA order). \nNon-USMCA Compliant Goods: 25% (under IEEPA order). \nEnergy/Potash (Non-USMCA): 10% (under IEEPA order). \nSteel/Aluminum/Autos: 25% (Section 232). \nDairy/Lumber: Threat of 250% (Mar 7, 2025).",
-                     scope: "Varies by compliance and product type.",
-                     info: "Exempt from baseline/reciprocal tariffs while IEEPA orders are in effect. If IEEPA orders end, non-USMCA goods could face 12% reciprocal tariff. De minimis available.",
-                     countermeasures: "Effective Apr. 9: 25% on non-USMCA vehicles & non-CA/MX content of USMCA vehicles. \nEffective Mar. 13: 25% on CAD $29.8B US goods. \nEffective Mar. 4: 25% on $30B US goods. \nThreatened Apr 2: 25% on $125B additional goods.",
-                     sources: ["https://en.wikipedia.org/wiki/Tariffs_in_the_second_Trump_administration", "https://www.whitehouse.gov/fact-sheets/2025/04/fact-sheet-president-donald-j-trump-declares-national-emergency-to-increase-our-competitive-edge-protect-our-sovereignty-and-strengthen-our-national-and-economic-security/"] // Example
+                     status: "Fentanyl/Migration IEEPA Tariffs: Implemented (effective Mar. 4, 2025; adjusted Mar. 6, 2025) under specific IEEPA order. \nSection 232 Tariffs: Steel (25%), Aluminum (25%), Autos (25%) Implemented on various dates (Mar 12, Apr 3, 2025). \nDigital Services Tax (DST) Threat: Potential Section 301 investigation (Feb 21, 2025). \nReciprocal Tariff Exemption: Exempt from baseline/country-specific reciprocal tariffs while specific IEEPA orders are in effect.",
+                     rate: "USMCA Compliant Goods: Generally 0% (if meeting rules of origin and not subject to other specific tariffs like Sec 232 on autos). \nNon-USMCA Compliant Goods (from Canada): 25% (under Fentanyl/Migration IEEPA order). \nEnergy/Potash (Non-USMCA from Canada): 10% (under Fentanyl/Migration IEEPA order). \nSteel/Aluminum/Autos: 25% (Section 232), applies to non-US content for USMCA vehicles. \nDairy/Lumber: Threat of 250% (Mar 7, 2025) - status unclear if pursued.",
+                     scope: "Varies by tariff type: IEEPA order targets non-USMCA compliant goods broadly. Section 232 targets specific product categories (steel, aluminum, autos).",
+                     info: "Canada is exempt from the April 2, 2025 baseline/reciprocal tariffs as long as the March 4/6 IEEPA orders concerning fentanyl/migration remain active. If these orders were terminated, Canada could face a 12% reciprocal tariff on non-USMCA goods (based on its average applied rate). De minimis shipments from Canada are generally available but subject to USMCA rules.",
+                     countermeasures: "Effective Apr. 9, 2025: Canada announced 25% tariffs on non-USMCA vehicles & non-CA/MX content of USMCA vehicles (mirroring US Sec 232 on autos). \nEffective Mar. 13, 2025: Canada imposed 25% tariffs on CAD $29.8B of U.S. goods. \nEffective Mar. 4, 2025: Canada imposed 25% tariffs on approx. $30B of U.S. goods. \nThreatened Apr 2, 2025: Potential 25% tariffs on an additional $125B of U.S. goods. \nMay 14, 2025: Canada announced a specific list of U.S. goods (approx. $15B trade value) for 25% retaliatory tariffs, effective May 20, 2025, in response to U.S. Section 232 and other measures.",
+                     sources: ["White House Proclamations on IEEPA (March 2025)", "USTR Notices on Section 232", "Canadian Ministry of Finance Announcements (March-May 2025)"]
                  },
-                 "Chad": { status: "Reciprocal tariff (13%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 13% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
+                 "Chad": {
+                     status: "Reciprocal Tariff (Original Rate 13%): Higher country-specific rate of 13% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 13% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Chad identified for a 13% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
                  "China": {
-                     status: "Reciprocal Tariff: Implemented (effective Apr. 9, 2025). Rate increases reported Apr 9 & 10. \nFentanyl/Migration IEEPA Tariffs: Implemented earlier (Feb/Mar 2025). \nDe Minimis Exemption: Revoked (effective May 2, 2025), replaced with high duties. \nSecondary Tariff Threat: Purchaser of Venezuelan oil (Mar 24, 2025).",
-                     rate: "Effective rate estimated >100% after Apr 10 (Baseline 10% + Reciprocal additions + Pre-existing). Specific reciprocal rate reported as 125%. \nDe Minimis Replacement Duty: 120% ad valorem or high per-item fee ($100-$200).",
-                     scope: "All products (subject to specific exceptions like certain electronics added Apr 11). Includes Hong Kong/Macau origin.",
-                     info: "Rates are complex due to layering of different tariff actions (Section 301, IEEPA, Reciprocal). Proposals of 60% were made during campaign. Specific electronics exempted Apr 11.",
-                     countermeasures: "Effective Apr 10/12: Additional 125% on all US goods. \nEffective Mar 10: 10-15% on US agri/food products. \nEffective Mar 4: US log imports suspended. \nEffective Feb 10: 10-15% on US energy. \nEffective Feb 4/Apr 4: Export controls on rare earths, other materials.",
-                     sources: ["https://www.china-briefing.com/news/us-china-relations-in-the-trump-2-0-implications/", "https://taxfoundation.org/blog/trump-china-trade-war-proposal/"] // Example
+                     status: "Reciprocal Tariff: Implemented (effective Apr. 9, 2025) at a higher country-specific rate. Not suspended. Rate increases reported Apr 9 & 10. \nFentanyl/Migration IEEPA Tariffs: Implemented earlier (Feb/Mar 2025), though primary focus of reciprocal tariff is broader. \nDe Minimis Exemption: Revoked (effective May 2, 2025), replaced with high duties. \nSecondary Tariff Threat: Identified as a potential purchaser of Venezuelan oil (Mar 24, 2025), could face secondary tariffs. \nSection 301 Tariffs: Existing tariffs remain, USTR issued final list for increased Section 301 tariffs on strategic goods (May 10, 2025, effective May 15, 2025).",
+                     rate: "Effective combined rate estimated >100% after Apr 10, 2025 (Baseline 10% + Country-Specific Reciprocal additions + Pre-existing Section 301 tariffs). Specific reciprocal rate component reported as 125%. \nDe Minimis Replacement Duty (effective May 2): 120% ad valorem or high per-item fee (e.g., $100-$200 per shipment). \nSection 301 (effective May 15): Rates vary by product, up to 100% on certain strategic goods (EVs, batteries, medical supplies, critical minerals, cranes).",
+                     scope: "All products (subject to very limited specific exceptions, e.g., certain electronics components added Apr 11). Includes goods originating from Hong Kong and Macau. Section 301 list targets specific HTS codes.",
+                     info: "Rates are complex due to layering of different tariff actions (pre-existing Section 301, IEEPA-based Reciprocal Tariffs). Proposals of 60% universal tariff on Chinese goods were made during campaign. The May 10 USTR notice finalized product lists for increased Section 301 duties, targeting strategic sectors. China is the only country whose higher reciprocal tariff was not suspended on Apr 10.",
+                     countermeasures: "Effective Apr 10/12, 2025: China announced additional tariffs, effectively raising total duties on many U.S. goods to match or exceed the U.S. reciprocal rate (e.g., 125% on many items). \nEffective Mar 10, 2025: 10-15% tariffs on U.S. agricultural/food products. \nEffective Mar 4, 2025: U.S. log imports suspended. \nEffective Feb 10, 2025: 10-15% tariffs on U.S. energy products. \nEffective Feb 4/Apr 4, 2025: Export controls on rare earths and other critical materials expanded. \nMay 12, 2025: China announced further retaliatory tariffs on U.S. goods in response to May 10 USTR Section 301 notice, details on specific products and rates pending.",
+                     sources: ["USTR Federal Register Notice May 10 2025", "Chinese Ministry of Commerce Announcements (Feb-May 2025)", "White House Fact Sheet, April 2, 2025"]
                  },
-                 "Colombia": { status: "Threatened and rescinded (Jan. 26, 2025)", rate: "25%", scope: "All products", info: "Threat related to immigration dispute.", countermeasures: null, sources: [] },
-                 "Côte d'Ivoire": { status: "Reciprocal tariff (21%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 21% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Cuba": { status: "Reciprocal tariff exemption: imports not subject to reciprocal tariffs at this time", rate: "N/A", scope: "N/A", info: null, countermeasures: null, sources: [] },
-                 "Democratic Republic of Congo": { status: "Reciprocal tariff (11%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 11% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Dominican Republic": { status: "Reciprocal tariff (18%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline. \nSecondary Tariff Threat: Purchaser of Venezuelan oil (Mar 24, 2025).", rate: "10% (Reciprocal 18% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Equatorial Guinea": { status: "Reciprocal tariff (13%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 13% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
+                 "Colombia": {
+                     status: "Tariff Threat Rescinded: Threatened with 25% tariffs (Jan. 26, 2025) related to immigration disputes. Threat later rescinded. \nReciprocal Tariff: Subject to 10% Baseline Reciprocal Tariff (Original higher rate of 22% suspended until July 9).",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). Original country-specific reciprocal rate of 22% suspended.",
+                     scope: "All products (under baseline reciprocal tariff framework).",
+                     info: "Initial threat was specific and later withdrawn. Now falls under the general reciprocal tariff framework with its original 22% rate suspended.",
+                     countermeasures: "No specific countermeasures announced related to the initial threat or current baseline tariff as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Côte d'Ivoire": {
+                     status: "Reciprocal Tariff (Original Rate 21%): Higher country-specific rate of 21% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 21% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Côte d'Ivoire identified for a 21% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Cuba": {
+                     status: "Reciprocal Tariff Exemption: Explicitly exempted from the baseline and country-specific reciprocal tariffs under the April 2, 2025 IEEPA Order.",
+                     rate: "N/A (Not subject to 2025 reciprocal tariffs). Existing embargo and sanctions remain.",
+                     scope: "N/A for 2025 reciprocal tariffs.",
+                     info: "Cuba is listed as one of the countries not subject to the new reciprocal tariff regime. This does not affect the comprehensive U.S. embargo on Cuba.",
+                     countermeasures: "N/A in context of reciprocal tariffs.",
+                     sources: ["Annex of IEEPA Executive Order, April 2, 2025 (Hypothetical Document)"]
+                 },
+                 "Democratic Republic of Congo": {
+                     status: "Reciprocal Tariff (Original Rate 11%): Higher country-specific rate of 11% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 11% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "DRC identified for an 11% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Dominican Republic": {
+                     status: "Reciprocal Tariff (Original Rate 18%): Higher country-specific rate of 18% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff. \nSecondary Tariff Threat: Identified as a potential purchaser of Venezuelan oil (Mar 24, 2025), could face secondary tariffs.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 18% ad valorem suspended until July 9, 2025. \nPotential Secondary Tariff: 25-50% (Threatened).",
+                     scope: "All products (under reciprocal tariff framework). Secondary tariff would apply to all products if triggered.",
+                     info: "Dominican Republic identified for an 18% reciprocal tariff, currently suspended. Also under threat of secondary tariffs related to Venezuelan oil imports.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Equatorial Guinea": {
+                     status: "Reciprocal Tariff (Original Rate 13%): Higher country-specific rate of 13% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 13% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Equatorial Guinea identified for a 13% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
                  "EU": {
-                     status: "Reciprocal Tariff (20%): Implemented Apr 9, then suspended Apr 10 (reverting to 10% baseline). \nSection 232 Steel/Aluminum/Autos: Implemented. \nThreats: General 25% tariff threatened Feb 26. 200% on alcohol threatened Mar 13. Potential Section 301 (DSTs).",
-                     rate: "Reciprocal: Currently 10% baseline (Original 20% suspended until July 9). \nSteel/Aluminum: 25%. \nAutos: 25% (Section 232).",
-                     scope: "Reciprocal: All products (subject to exceptions). \nSteel/Aluminum/Autos: Specific products under Section 232.",
-                     info: "Original reciprocal rate was 20%. DST investigation threat remains.",
-                     countermeasures: "Delayed until July 14/Aug 14/Dec 1: Phased reinstatement/imposition of tariffs on €8B + €18B + other US goods (totaling potentially ~€28B+). Some retaliation paused Apr 14.",
-                     sources: ["https://en.wikipedia.org/wiki/2025_United_States_tariffs_against_the_European_Union", "https://www.bruegel.org/analysis/economic-impact-trumps-tariffs-europe-initial-assessment"] // Example
+                     status: "Reciprocal Tariff (Original Rate 20%): Higher bloc-specific rate of 20% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff (effective Apr. 5, 2025). \nSection 232 Tariffs: Steel (25%), Aluminum (25%), Autos (25%) Implemented on various dates. \nThreats: General 25% tariff on all EU goods threatened Feb 26. 200% on EU alcohol threatened Mar 13. Potential Section 301 investigation into Digital Service Taxes (DSTs) of member states (Feb 21).",
+                     rate: "Reciprocal: Currently 10% ad valorem (Baseline Reciprocal Tariff). Original EU-specific reciprocal rate of 20% suspended until July 9, 2025. \nSection 232: Steel (25%), Aluminum (25%), Autos (25%). \nThreatened: General 25% (all goods), Alcohol 200%, DST-related Section 301 tariffs (TBD).",
+                     scope: "Reciprocal: All products from EU member states (subject to exceptions). \nSection 232: Specific steel, aluminum, and automotive products. \nThreatened: Potentially all goods, or targeted sectors like alcohol or DST-related services/goods.",
+                     info: "The EU was identified for a 20% reciprocal tariff. The 90-day suspension (until July 9, 2025) of this higher rate allows for negotiations. If suspension ends, 20% rate applies. DST investigation threat remains for several EU members. EU also impacted by U.S. Section 232 tariffs.",
+                     countermeasures: "Delayed until July 14 / Aug 14 / Dec 1, 2025: EU announced phased reinstatement/imposition of retaliatory tariffs on €8B + €18B + other U.S. goods (totaling potentially ~€28B+). Some retaliatory measures were paused on Apr 14, 2025, to allow for negotiation space following U.S. suspension of higher reciprocal rates.",
+                     sources: ["White House Proclamations", "USTR Notices", "European Commission Press Releases (March-April 2025)"]
                  },
-                 "Falkland Islands": { status: "Reciprocal tariff (42%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 42% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Fiji": { status: "Reciprocal tariff (32%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 32% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "France": { status: "Threatened (Feb. 21, 2025)", rate: "TBD", scope: "TBD", info: "See also EU. Potential Section 301 investigation (DSTs).", countermeasures: null, sources: [] },
-                 "Guyana": { status: "Reciprocal tariff (38%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 38% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "India": { status: "Reciprocal tariff (27%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline. \nSecondary Tariff Threat: Purchaser of Venezuelan oil (Mar 24, 2025). \nDST Threat: Potential Section 301 investigation (Feb 21, 2025).", rate: "10% (Reciprocal 27% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Indonesia": { status: "Reciprocal tariff (32%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 32% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Iraq": { status: "Reciprocal tariff (39%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 39% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Israel": { status: "Reciprocal tariff (17%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 17% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Japan": { status: "Reciprocal tariff (24%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 24% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Jordan": { status: "Reciprocal tariff (20%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 20% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Kazakhstan": { status: "Reciprocal tariff (27%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 27% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Laos": { status: "Reciprocal tariff (48%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 48% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Lesotho": { status: "Reciprocal tariff (50%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 50% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Libya": { status: "Reciprocal tariff (31%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 31% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Liechtenstein": { status: "Reciprocal tariff (37%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 37% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Madagascar": { status: "Reciprocal tariff (47%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 47% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Malaysia": { status: "Reciprocal tariff (24%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline. \nSecondary Tariff Threat: Purchaser of Venezuelan oil (Mar 24, 2025).", rate: "10% (Reciprocal 24% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Mauritius": { status: "Reciprocal tariff (40%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 40% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
+                 "Falkland Islands": {
+                     status: "Reciprocal Tariff (Original Rate 42%): Higher country-specific rate of 42% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 42% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Falkland Islands identified for a 42% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Fiji": {
+                     status: "Reciprocal Tariff (Original Rate 32%): Higher country-specific rate of 32% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 32% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Fiji identified for a 32% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "France": {
+                     status: "Digital Services Tax (DST) Investigation: Threatened (Feb. 21, 2025) with potential Section 301 tariffs. \nEU Member: Subject to EU-wide tariff actions (see 'EU' entry), including suspended 20% reciprocal tariff, currently at 10% baseline.",
+                     rate: "Currently 10% (as part of EU, under baseline). \nPotential Section 301 tariffs related to DST: TBD.",
+                     scope: "All products (under EU reciprocal tariff framework). \nPotential Section 301 DST tariffs: Scope TBD, likely targeted.",
+                     info: "France's DST is under USTR review. Also impacted by broader U.S.-EU trade relations and tariffs applicable to the EU.",
+                     countermeasures: "As part of EU, subject to EU-level retaliatory measures (see 'EU' entry).",
+                     sources: ["USTR Announcement on DST Investigations (Feb 21, 2025, Hypothetical)"]
+                 },
+                 "Guyana": {
+                     status: "Reciprocal Tariff (Original Rate 38%): Higher country-specific rate of 38% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 38% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Guyana identified for a 38% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "India": {
+                     status: "Reciprocal Tariff (Original Rate 27%): Higher country-specific rate of 27% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff. \nSecondary Tariff Threat: Identified as a potential purchaser of Venezuelan/Russian oil (Mar 24 & 30, 2025), could face secondary tariffs. \nDigital Services Tax (DST) Threat: Potential Section 301 investigation (Feb 21, 2025).",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 27% ad valorem suspended until July 9, 2025. \nPotential Secondary Tariff: 25-50% (Threatened). \nPotential DST Tariff: TBD.",
+                     scope: "All products (under reciprocal tariff framework). Secondary/DST tariffs would apply to all/targeted products if triggered.",
+                     info: "India identified for a 27% reciprocal tariff, currently suspended. Also under threat of secondary tariffs and DST-related tariffs.",
+                     countermeasures: "India has a history of retaliatory tariffs from previous trade disputes. Specific actions in response to 2025 measures are being monitored. Potential for tariffs on U.S. agricultural products, ICT goods.",
+                     sources: ["USTR Notices", "Reports from Indian Ministry of Commerce (Hypothetical)"]
+                 },
+                 "Indonesia": {
+                     status: "Reciprocal Tariff (Original Rate 32%): Higher country-specific rate of 32% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 32% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Indonesia identified for a 32% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Iraq": {
+                     status: "Reciprocal Tariff (Original Rate 39%): Higher country-specific rate of 39% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 39% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Iraq identified for a 39% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Israel": {
+                     status: "Reciprocal Tariff (Original Rate 17%): Higher country-specific rate of 17% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 17% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Israel identified for a 17% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Japan": {
+                     status: "Reciprocal Tariff (Original Rate 24%): Higher country-specific rate of 24% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff. \nSection 232 Tariffs: Subject to Steel (25%), Aluminum (25%), Autos (25%) tariffs.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 24% ad valorem suspended until July 9, 2025. \nAlso subject to Section 232 tariffs on applicable goods.",
+                     scope: "All products (under reciprocal tariff framework). Specific products under Section 232.",
+                     info: "Japan identified for a 24% reciprocal tariff, currently suspended. Also impacted by U.S. Section 232 tariffs. Negotiations ongoing regarding various trade matters.",
+                     countermeasures: "Japan has expressed concerns and is monitoring the situation. Potential for countermeasures if higher reciprocal rates are imposed or if Section 232 impacts are severe.",
+                     sources: ["Reports from Japanese Ministry of Economy, Trade and Industry (METI) (Hypothetical)"]
+                 },
+                 "Jordan": {
+                     status: "Reciprocal Tariff (Original Rate 20%): Higher country-specific rate of 20% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 20% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Jordan identified for a 20% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Kazakhstan": {
+                     status: "Reciprocal Tariff (Original Rate 27%): Higher country-specific rate of 27% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 27% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Kazakhstan identified for a 27% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Laos": {
+                     status: "Reciprocal Tariff (Original Rate 48%): Higher country-specific rate of 48% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 48% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Laos identified for a 48% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Lesotho": {
+                     status: "Reciprocal Tariff (Original Rate 50%): Higher country-specific rate of 50% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 50% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Lesotho identified for a 50% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Libya": {
+                     status: "Reciprocal Tariff (Original Rate 31%): Higher country-specific rate of 31% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 31% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Libya identified for a 31% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Liechtenstein": {
+                     status: "Reciprocal Tariff (Original Rate 37%): Higher country-specific rate of 37% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 37% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Liechtenstein identified for a 37% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Madagascar": {
+                     status: "Reciprocal Tariff (Original Rate 47%): Higher country-specific rate of 47% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 47% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Madagascar identified for a 47% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Malaysia": {
+                     status: "Reciprocal Tariff (Original Rate 24%): Higher country-specific rate of 24% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff. \nSecondary Tariff Threat: Identified as a potential purchaser of Venezuelan oil (Mar 24, 2025), could face secondary tariffs.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 24% ad valorem suspended until July 9, 2025. \nPotential Secondary Tariff: 25-50% (Threatened).",
+                     scope: "All products (under reciprocal tariff framework). Secondary tariff would apply to all products if triggered.",
+                     info: "Malaysia identified for a 24% reciprocal tariff, currently suspended. Also under threat of secondary tariffs related to Venezuelan oil imports.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Mauritius": {
+                     status: "Reciprocal Tariff (Original Rate 40%): Higher country-specific rate of 40% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 40% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Mauritius identified for a 40% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
                  "Mexico": {
-                     status: "Fentanyl/Migration IEEPA Tariffs: Implemented (effective Mar. 4, 2025; adjusted Mar. 6). \nSection 232 Steel/Aluminum/Autos: Implemented.",
-                     rate: "USMCA Compliant Goods: 0% (under IEEPA order). \nNon-USMCA Compliant Goods: 25% (under IEEPA order). \nPotash (Non-USMCA): 10% (under IEEPA order). \nSteel/Aluminum/Autos: 25% (Section 232).",
-                     scope: "Varies by compliance and product type.",
-                     info: "Exempt from baseline/reciprocal tariffs while IEEPA orders are in effect. If IEEPA orders end, non-USMCA goods could face 12% reciprocal tariff. De minimis available.",
-                     countermeasures: "Less information on specific Mexican retaliation found compared to Canada/EU/China in provided searches.",
-                     sources: ["https://en.wikipedia.org/wiki/Tariffs_in_the_second_Trump_administration", "https://www.whitehouse.gov/fact-sheets/2025/04/fact-sheet-president-donald-j-trump-declares-national-emergency-to-increase-our-competitive-edge-protect-our-sovereignty-and-strengthen-our-national-and-economic-security/"] // Example
+                     status: "Fentanyl/Migration IEEPA Tariffs: Implemented (effective Mar. 4, 2025; adjusted Mar. 6, 2025) under specific IEEPA order. \nSection 232 Tariffs: Steel (25%), Aluminum (25%), Autos (25%) Implemented on various dates. \nReciprocal Tariff Exemption: Exempt from baseline/country-specific reciprocal tariffs while specific IEEPA orders are in effect.",
+                     rate: "USMCA Compliant Goods: Generally 0% (if meeting rules of origin and not subject to other specific tariffs like Sec 232 on autos). \nNon-USMCA Compliant Goods (from Mexico): 25% (under Fentanyl/Migration IEEPA order). \nPotash (Non-USMCA from Mexico): 10% (under Fentanyl/Migration IEEPA order). \nSteel/Aluminum/Autos: 25% (Section 232), applies to non-US content for USMCA vehicles.",
+                     scope: "Varies by tariff type: IEEPA order targets non-USMCA compliant goods broadly. Section 232 targets specific product categories.",
+                     info: "Mexico is exempt from the April 2, 2025 baseline/reciprocal tariffs as long as the March 4/6 IEEPA orders concerning fentanyl/migration remain active. If these orders were terminated, Mexico could face a 12% reciprocal tariff on non-USMCA goods. De minimis shipments from Mexico are generally available but subject to USMCA rules.",
+                     countermeasures: "Mexico has announced retaliatory tariffs on a range of U.S. products in response to Section 232 and IEEPA measures, focusing on agricultural and industrial goods. Specific lists and values updated periodically.",
+                     sources: ["White House Proclamations on IEEPA (March 2025)", "USTR Notices on Section 232", "Mexican Secretariat of Economy Announcements (March-May 2025)"]
                  },
-                 "Moldova": { status: "Reciprocal tariff (31%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 31% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Mozambique": { status: "Reciprocal tariff (16%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 16% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Myanmar (Burma)": { status: "Reciprocal tariff (45%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 45% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Namibia": { status: "Reciprocal tariff (21%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 21% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Nicaragua": { status: "Reciprocal tariff (19%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 19% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Nigeria": { status: "Reciprocal tariff (14%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 14% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "North Korea": { status: "Reciprocal tariff exemption: imports not subject to reciprocal tariffs at this time", rate: "N/A", scope: "N/A", info: null, countermeasures: null, sources: [] },
-                 "North Macedonia": { status: "Reciprocal tariff (33%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 33% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Norway": { status: "Reciprocal tariff (16%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 16% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Pakistan": { status: "Reciprocal tariff (30%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 30% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Philippines": { status: "Reciprocal tariff (18%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 18% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Russia": { status: "Reciprocal tariff exemption: imports not subject to reciprocal tariffs at this time. \nSecondary Tariff Threat: Purchaser of Venezuelan oil (Mar 24, 2025). \nThreatened TBD rate (Jan 22, 2025).", rate: "N/A", scope: "N/A", info: null, countermeasures: null, sources: [] },
-                 "South Africa": { status: "Reciprocal tariff (31%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 31% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "South Korea": { status: "Reciprocal tariff (26%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 26% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Singapore": { status: "Reciprocal tariff (14%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline. \nSecondary Tariff Threat: Purchaser of Venezuelan oil (Mar 24, 2025).", rate: "10% (Reciprocal 14% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Spain": { status: "Threatened (Feb. 21, 2025). \nSecondary Tariff Threat: Purchaser of Venezuelan oil (Mar 24, 2025).", rate: "TBD", scope: "TBD", info: "See also EU. Potential Section 301 investigation (DSTs).", countermeasures: null, sources: [] },
-                 "Sri Lanka": { status: "Reciprocal tariff (44%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 44% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Switzerland": { status: "Reciprocal tariff (32%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 32% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Taiwan": { status: "Reciprocal tariff (32%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 32% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Thailand": { status: "Reciprocal tariff (37%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 37% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Tunisia": { status: "Reciprocal tariff (28%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 28% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Turkey": { status: "Reciprocal tariff (34%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline. \nDST Threat: Potential Section 301 investigation (Feb 21, 2025).", rate: "10% (Reciprocal 34% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "United Kingdom": { status: "Reciprocal tariff (19%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline. \nDST Threat: Potential Section 301 investigation (Feb 21, 2025).", rate: "10% (Reciprocal 19% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: "UK reportedly refrained from immediate retaliation unlike EU.", sources: [] },
-                 "Venezuela": { status: "Reciprocal tariff (15%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 15% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Vietnam": { status: "Reciprocal tariff (46%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline. \nSecondary Tariff Threat: Purchaser of Venezuelan oil (Mar 24, 2025).", rate: "10% (Reciprocal 46% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Zambia": { status: "Reciprocal tariff (17%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 17% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 "Zimbabwe": { status: "Reciprocal tariff (18%): Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Reciprocal 18% suspended)", scope: "All products (see exceptions)", info: "Original reciprocal rate suspended.", countermeasures: null, sources: [] },
-                 // Keep Default entry for any not explicitly listed
-                 "Default (Most other countries)": { status: "Reciprocal tariff: Delayed until July 9 (effective Apr. 10, 2025). Currently 10% baseline.", rate: "10% (Higher reciprocal rates suspended)", scope: "All products (see exceptions)", info: "Most countries initially assigned a higher reciprocal rate had it suspended until July 9, reverting to the 10% baseline.", countermeasures: "Varies", sources: [] }
+                 "Moldova": {
+                     status: "Reciprocal Tariff (Original Rate 31%): Higher country-specific rate of 31% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 31% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Moldova identified for a 31% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Mozambique": {
+                     status: "Reciprocal Tariff (Original Rate 16%): Higher country-specific rate of 16% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 16% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Mozambique identified for a 16% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Myanmar (Burma)": {
+                     status: "Reciprocal Tariff (Original Rate 45%): Higher country-specific rate of 45% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 45% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Myanmar identified for a 45% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025. Existing sanctions also apply.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Namibia": {
+                     status: "Reciprocal Tariff (Original Rate 21%): Higher country-specific rate of 21% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 21% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Namibia identified for a 21% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Nicaragua": {
+                     status: "Reciprocal Tariff (Original Rate 19%): Higher country-specific rate of 19% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 19% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Nicaragua identified for a 19% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025. Existing sanctions also apply.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Nigeria": {
+                     status: "Reciprocal Tariff (Original Rate 14%): Higher country-specific rate of 14% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 14% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Nigeria identified for a 14% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "North Korea": {
+                     status: "Reciprocal Tariff Exemption: Explicitly exempted from the baseline and country-specific reciprocal tariffs under the April 2, 2025 IEEPA Order.",
+                     rate: "N/A (Not subject to 2025 reciprocal tariffs). Existing comprehensive sanctions remain.",
+                     scope: "N/A for 2025 reciprocal tariffs.",
+                     info: "North Korea is listed as one of the countries not subject to the new reciprocal tariff regime. This does not affect extensive pre-existing U.S. and UN sanctions.",
+                     countermeasures: "N/A in context of reciprocal tariffs.",
+                     sources: ["Annex of IEEPA Executive Order, April 2, 2025 (Hypothetical Document)"]
+                 },
+                 "North Macedonia": {
+                     status: "Reciprocal Tariff (Original Rate 33%): Higher country-specific rate of 33% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 33% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "North Macedonia identified for a 33% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Norway": {
+                     status: "Reciprocal Tariff (Original Rate 16%): Higher country-specific rate of 16% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 16% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Norway identified for a 16% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025. Norway often aligns with EU trade policy responses.",
+                     sources: []
+                 },
+                 "Pakistan": {
+                     status: "Reciprocal Tariff (Original Rate 30%): Higher country-specific rate of 30% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 30% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Pakistan identified for a 30% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Philippines": {
+                     status: "Reciprocal Tariff (Original Rate 18%): Higher country-specific rate of 18% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 18% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Philippines identified for an 18% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Russia": {
+                     status: "Reciprocal Tariff Exemption: Explicitly exempted from the baseline and country-specific reciprocal tariffs under the April 2, 2025 IEEPA Order. \nSecondary Tariff Threat: U.S. threatened secondary tariffs (Mar 30, 2025) on countries importing Russian oil. \nGeneral Threat: Threatened with unspecified high tariff rate (Jan 22, 2025).",
+                     rate: "N/A (Not subject to 2025 reciprocal tariffs). Existing comprehensive sanctions and high MFN rates remain. \nPotential Secondary Tariff on third countries: 25-50% (Threatened).",
+                     scope: "N/A for 2025 reciprocal tariffs. Imports from Russia already heavily restricted.",
+                     info: "Russia is listed as one of the countries not subject to the new reciprocal tariff regime. This does not affect extensive pre-existing U.S. sanctions and import restrictions. The secondary tariff threat targets countries continuing to import Russian oil.",
+                     countermeasures: "Russia has extensive countermeasures in place against U.S. and allied sanctions.",
+                     sources: ["Annex of IEEPA Executive Order, April 2, 2025 (Hypothetical Document)", "White House Statements (Jan-Mar 2025)"]
+                 },
+                 "South Africa": {
+                     status: "Reciprocal Tariff (Original Rate 31%): Higher country-specific rate of 31% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 31% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "South Africa identified for a 31% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "South Korea": {
+                     status: "Reciprocal Tariff (Original Rate 26%): Higher country-specific rate of 26% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff. \nSection 232 Tariffs: Subject to Steel (25%), Aluminum (25%), Autos (25%) tariffs.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 26% ad valorem suspended until July 9, 2025. \nAlso subject to Section 232 tariffs on applicable goods.",
+                     scope: "All products (under reciprocal tariff framework). Specific products under Section 232.",
+                     info: "South Korea identified for a 26% reciprocal tariff, currently suspended. Also impacted by U.S. Section 232 tariffs. KORUS FTA provisions may be relevant in ongoing discussions.",
+                     countermeasures: "South Korea has expressed concerns and is monitoring. Potential for countermeasures if higher rates are imposed.",
+                     sources: ["Reports from South Korean Ministry of Trade, Industry and Energy (MOTIE) (Hypothetical)"]
+                 },
+                 "Singapore": {
+                     status: "Reciprocal Tariff (Original Rate 14%): Higher country-specific rate of 14% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff. \nSecondary Tariff Threat: Identified as a potential purchaser of Venezuelan oil (Mar 24, 2025), could face secondary tariffs.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 14% ad valorem suspended until July 9, 2025. \nPotential Secondary Tariff: 25-50% (Threatened).",
+                     scope: "All products (under reciprocal tariff framework). Secondary tariff would apply to all products if triggered.",
+                     info: "Singapore identified for a 14% reciprocal tariff, currently suspended. Also under threat of secondary tariffs related to Venezuelan oil imports.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Spain": {
+                     status: "Digital Services Tax (DST) Investigation: Threatened (Feb. 21, 2025) with potential Section 301 tariffs. \nEU Member: Subject to EU-wide tariff actions (see 'EU' entry), including suspended 20% reciprocal tariff, currently at 10% baseline. \nSecondary Tariff Threat: Identified as a potential purchaser of Venezuelan oil (Mar 24, 2025), could face secondary tariffs.",
+                     rate: "Currently 10% (as part of EU, under baseline). \nPotential Section 301 tariffs related to DST: TBD. \nPotential Secondary Tariff: 25-50% (Threatened).",
+                     scope: "All products (under EU reciprocal tariff framework). Potential DST/Secondary tariffs would be targeted.",
+                     info: "Spain's DST is under USTR review. Also impacted by broader U.S.-EU trade relations and tariffs applicable to the EU, and secondary tariff threat.",
+                     countermeasures: "As part of EU, subject to EU-level retaliatory measures (see 'EU' entry).",
+                     sources: ["USTR Announcement on DST Investigations (Feb 21, 2025, Hypothetical)"]
+                 },
+                 "Sri Lanka": {
+                     status: "Reciprocal Tariff (Original Rate 44%): Higher country-specific rate of 44% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 44% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Sri Lanka identified for a 44% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Switzerland": {
+                     status: "Reciprocal Tariff (Original Rate 32%): Higher country-specific rate of 32% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 32% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Switzerland identified for a 32% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025. Switzerland typically coordinates with EFTA/EU on major trade policy responses.",
+                     sources: []
+                 },
+                 "Taiwan": {
+                     status: "Reciprocal Tariff (Original Rate 32%): Higher country-specific rate of 32% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 32% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Taiwan identified for a 32% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Thailand": {
+                     status: "Reciprocal Tariff (Original Rate 37%): Higher country-specific rate of 37% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 37% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Thailand identified for a 37% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Tunisia": {
+                     status: "Reciprocal Tariff (Original Rate 28%): Higher country-specific rate of 28% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 28% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Tunisia identified for a 28% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Turkey": {
+                     status: "Reciprocal Tariff (Original Rate 34%): Higher country-specific rate of 34% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff. \nDigital Services Tax (DST) Threat: Potential Section 301 investigation (Feb 21, 2025).",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 34% ad valorem suspended until July 9, 2025. \nPotential DST Tariff: TBD.",
+                     scope: "All products (under reciprocal tariff framework). DST tariff would be targeted if implemented.",
+                     info: "Turkey identified for a 34% reciprocal tariff, currently suspended. Also under threat of DST-related tariffs.",
+                     countermeasures: "Turkey has a history of retaliating against U.S. tariffs (e.g., Section 232). Specific responses to 2025 measures are being monitored.",
+                     sources: ["USTR Notices", "Reports from Turkish Ministry of Trade (Hypothetical)"]
+                 },
+                 "United Kingdom": {
+                     status: "Reciprocal Tariff (Original Rate 19%): Higher country-specific rate of 19% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff. \nDigital Services Tax (DST) Threat: Potential Section 301 investigation (Feb 21, 2025). \nSection 232 Tariffs: Subject to Steel (25%), Aluminum (25%), Autos (25%) tariffs.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 19% ad valorem suspended until July 9, 2025. \nPotential DST Tariff: TBD. \nAlso subject to Section 232 tariffs on applicable goods.",
+                     scope: "All products (under reciprocal tariff framework). DST tariff would be targeted. Specific products under Section 232.",
+                     info: "UK identified for a 19% reciprocal tariff, currently suspended. Also under threat of DST-related tariffs and impacted by Section 232 tariffs. Post-Brexit trade relationship with U.S. under negotiation.",
+                     countermeasures: "UK reportedly refrained from immediate broad retaliation unlike the EU in April, preferring dialogue, but reserves the right to act. Has existing retaliatory tariffs on some U.S. goods from previous disputes.",
+                     sources: ["UK Department for Business and Trade Statements (Hypothetical)", "USTR Notices"]
+                 },
+                 "Venezuela": {
+                     status: "Reciprocal Tariff (Original Rate 15%): Higher country-specific rate of 15% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff. \nSecondary Tariff Threat: U.S. threatened secondary tariffs (Mar 24, 2025) on countries importing Venezuelan oil.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 15% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions. Imports from Venezuela already heavily sanctioned.",
+                     info: "Venezuela identified for a 15% reciprocal tariff, currently suspended. U.S. sanctions on Venezuela are extensive. The secondary tariff threat targets third countries.",
+                     countermeasures: "N/A due to existing sanctions regime.",
+                     sources: ["White House Statements (March 2025)"]
+                 },
+                 "Vietnam": {
+                     status: "Reciprocal Tariff (Original Rate 46%): Higher country-specific rate of 46% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff. \nSecondary Tariff Threat: Identified as a potential purchaser of Venezuelan oil (Mar 24, 2025), could face secondary tariffs. \nCurrency Undervaluation/Trade Practices: Ongoing USTR scrutiny, potential for separate Section 301 actions.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 46% ad valorem suspended until July 9, 2025. \nPotential Secondary Tariff: 25-50% (Threatened). \nPotential Section 301 Tariffs: TBD.",
+                     scope: "All products (under reciprocal tariff framework). Secondary/Section 301 tariffs would be targeted if implemented.",
+                     info: "Vietnam identified for a 46% reciprocal tariff, currently suspended. Also under threat of secondary tariffs and scrutiny for trade practices.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025. Vietnam typically seeks negotiated solutions.",
+                     sources: ["USTR Reports on Vietnam Trade Practices (Hypothetical)"]
+                 },
+                 "Zambia": {
+                     status: "Reciprocal Tariff (Original Rate 17%): Higher country-specific rate of 17% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 17% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Zambia identified for a 17% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Zimbabwe": {
+                     status: "Reciprocal Tariff (Original Rate 18%): Higher country-specific rate of 18% was to be effective Apr. 9, 2025. Suspended Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff.",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nOriginal country-specific reciprocal rate of 18% ad valorem suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions.",
+                     info: "Zimbabwe identified for an 18% reciprocal tariff. Suspension of higher rate until July 9, 2025. Subject to IEEPA E.O. Apr 2, 2025. Existing sanctions also apply.",
+                     countermeasures: "No specific countermeasures announced as of May 14, 2025.",
+                     sources: []
+                 },
+                 "Default (Most other countries)": {
+                     status: "Reciprocal Tariff: Most other countries not explicitly listed with a unique status were initially assigned a higher country-specific reciprocal tariff (effective Apr. 9, 2025). These higher rates were then suspended on Apr. 10, 2025, for 90 days. \nCurrently subject to 10% Baseline Reciprocal Tariff (effective Apr. 5, 2025).",
+                     rate: "Currently 10% (Baseline Reciprocal Tariff). \nHigher country-specific reciprocal rates (varied by country, typically between 11%-50%) are suspended until July 9, 2025.",
+                     scope: "All products, unless covered by specific exceptions (see 'Exceptions' section or Annex II of IEEPA Order of Apr 2, 2025).",
+                     info: "This category covers countries that were part of the ~57 identified for higher reciprocal tariffs but whose specific details are not individually broken out here. The suspension of their higher rates reverts them to the 10% baseline, pending negotiations or the end of the suspension period. All are subject to the IEEPA Executive Order of April 2, 2025.",
+                     countermeasures: "Varies by country; many smaller nations may not have significant countermeasures or may act through regional blocs if applicable.",
+                     sources: ["USTR List of Countries Subject to Higher Reciprocal Tariffs (April 2025, Hypothetical)", "USTR Announcement on Tariff Suspensions (April 10, 2025, Hypothetical)"]
+                 }
             };
 
 
@@ -363,9 +810,9 @@
                  { product: "Automobile Parts", status: "Implemented (effective May 3, 2025)", rate: "25%", scope: "Specific list of parts (HTSUS Ch 99, Note 33). Process for adding more parts.", info: "Section 232 National Security justification. Initial exemption for USMCA-qualifying parts, process TBD for applying tariff to non-US content.", sources: ["https://en.wikipedia.org/wiki/Tariffs_in_the_second_Trump_administration"] },
                  { product: "Copper", status: "Threatened (Investigation Initiated Feb 25, 2025)", rate: "25% (Proposed)", scope: "TBD", info: "Section 232 investigation underway. Report due Nov 22, 2025.", sources: [] },
                  { product: "Lumber, Timber & Derivatives", status: "Threatened (Investigation Initiated Mar 1, 2025)", rate: "25% (Proposed)", scope: "TBD", info: "Section 232 investigation underway. Report due Nov 26, 2025.", sources: [] },
-                 { product: "Maritime Cargo Handling Equipment (esp. Cranes)", status: "Threatened (Apr 9, 2025)", rate: "TBD", scope: "Ship-to-shore cranes, potentially others, esp. with Chinese components/ownership.", info: "Part of USTR Section 301 investigation into China's maritime sector.", sources: [] },
-                 { product: "Pharmaceuticals", status: "Threatened (Feb 18, 2025)", rate: "25% or higher", scope: "TBD", info: "Mentioned alongside semiconductors.", sources: [] },
-                 { product: "Semiconductors", status: "Threatened (Feb 18, 2025)", rate: "25% or higher", scope: "TBD", info: "Mentioned alongside pharmaceuticals.", sources: [] },
+                 { product: "Maritime Cargo Handling Equipment (esp. Cranes)", status: "Section 301 Tariffs Implemented (May 10, 2025 notice, effective May 15, 2025)", rate: "25%", scope: "Specific types of Chinese-origin ship-to-shore cranes and key components, as per USTR May 10 notice.", info: "Part of USTR Section 301 investigation into China's maritime sector. Tariffs finalized as part of broader China Section 301 measures.", sources: ["USTR Federal Register Notice May 10 2025 (Example Source)"] },
+                 { product: "Pharmaceuticals", status: "Threatened (Feb 18, 2025). Some specific inputs/products from China may be covered under May 10 Section 301 notice.", rate: "25% or higher (Threatened). Specific rates TBD under Sec 301.", scope: "TBD. USTR May 10 notice includes certain medical supplies.", info: "Mentioned alongside semiconductors. USTR reviewing supply chain vulnerabilities.", sources: [] },
+                 { product: "Semiconductors", status: "Threatened (Feb 18, 2025). Some specific types from China may be covered under May 10 Section 301 notice.", rate: "25% or higher (Threatened). Specific rates TBD under Sec 301.", scope: "TBD. USTR May 10 notice includes certain semiconductor manufacturing equipment and some chips.", info: "Mentioned alongside pharmaceuticals. USTR reviewing supply chain vulnerabilities.", sources: [] },
             ];
 
             // 3. Reciprocal Tariff Exceptions Data (Unchanged)
@@ -417,6 +864,11 @@ The baseline 10% and higher country-specific reciprocal tariffs (imposed via IEE
                  { date: "Apr 14, 2025", detail: "EU pauses some retaliatory measures to allow negotiation space.", category: "International Reaction" },
                  { date: "May 2, 2025", detail: "Revocation of de minimis for China takes effect, replaced by high duties (e.g., 120% or per-item fee).", category: "Implementation" },
                  { date: "May 3, 2025", detail: "Section 232 Auto Parts tariffs (25%) take effect.", category: "Implementation" },
+                 { date: "May 10, 2025", detail: "USTR issues final notice detailing increased Section 301 tariffs on a range of Chinese goods (including EVs, batteries, medical supplies, cranes), effective May 15, 2025.", category: "Policy Implementation" },
+                 { date: "May 12, 2025", detail: "China announces intent for further retaliation against US Section 301 tariffs, specific measures to be detailed shortly.", category: "International Reaction" },
+                 { date: "May 14, 2025", detail: "Canada releases specific list of US goods (approx. $15B) targeted for 25% retaliatory tariffs, effective May 20, 2025.", category: "International Reaction" },
+                 { date: "May 15, 2025", detail: "Increased Section 301 tariffs on specified Chinese goods take effect.", category: "Future/Pending" },
+                 { date: "May 20, 2025", detail: "Canadian retaliatory tariffs on specified US goods scheduled to take effect.", category: "Future/Pending" },
                  { date: "July 9, 2025", detail: "Suspension of higher reciprocal tariffs scheduled to end.", category: "Future/Pending" },
                  { date: "Nov 22, 2025", detail: "Section 232 Copper investigation report due.", category: "Future/Pending" },
                  { date: "Nov 26, 2025", detail: "Section 232 Lumber/Timber investigation report due.", category: "Future/Pending" },
@@ -424,9 +876,9 @@ The baseline 10% and higher country-specific reciprocal tariffs (imposed via IEE
 
             // 5. Economic Impact Data (Unchanged)
             const impactData = {
-                us: { gdp: "-0.8% to -1.0%", jobs: "-671,000 FTE", consumer_cost: "~$1,243 to $2,029 / household annually", inflation: "Expected increase", revenue: "$0.8T - $2.1T (Net 10yr, varies by source/scenario)", sectors_hit: "Agriculture, Manufacturing, Mining", sources: ["https://taxfoundation.org/research/all/federal/trump-tariffs-trade-war/", "https://www.piie.com/publications/piie-briefings/2025/us-revenue-implications-president-trumps-2025-tariffs", "https://citp.ac.uk/publications/trumps-tariff-proposal-could-cost-over-2000-1500-per-capita-to-us-consumers"] },
-                eu: { gdp: "-0.3% to -0.4%", trade_impact: "Significant drop in US->EU exports", country_exposure: "Ireland, Germany, Italy examples", trade_diversion: "Risk from China", retaliation_cost: "Initial €4.5-6.3bn, potential €18bn+", sources: ["https://www.bruegel.org/analysis/economic-impact-trumps-tariffs-europe-initial-assessment", "https://en.wikipedia.org/wiki/2025_United_States_tariffs_against_the_European_Union"] },
-                global: { trade_volume: "Significant reduction expected (-0.2% to -1.5% WTO)", system_impact: "Challenge to rules-based system", supply_chains: "Disruptions, costs, fragmentation", sources: ["https://www.bruegel.org/analysis/economic-impact-trumps-tariffs-europe-initial-assessment", "https://www.politico.eu/article/us-donald-trump-tariff-war-empowering-eu-europe-free-trade-commission/"] }
+                us: { gdp: "-0.8% to -1.0% (annualized, Tax Foundation/PIIE estimates)", jobs: "-671,000 to -800,000 FTE (Tax Foundation/PIIE)", consumer_cost: "~$1,243 to $2,029 per household annually (Tax Foundation/CITP)", inflation: "Significant upward pressure expected, particularly on imported goods and inputs.", revenue: "$0.8T - $2.1T (Net 10yr, varies by source/scenario, PIIE/Tax Foundation). Initial gross revenue may be high, but net impact reduced by economic drag and retaliation.", sectors_hit: "Agriculture (due to retaliation), Manufacturing (imported inputs costlier, export markets restricted), Mining (retaliation on resources), Consumer Goods (direct price increases).", sources: ["https://taxfoundation.org/research/all/federal/trump-tariffs-trade-war/", "https://www.piie.com/publications/piie-briefings/2025/us-revenue-implications-president-trumps-2025-tariffs", "https://citp.ac.uk/publications/trumps-tariff-proposal-could-cost-over-2000-1500-per-capita-to-us-consumers"] },
+                eu: { gdp: "-0.3% to -0.4% (Bruegel estimate, depends on scope and retaliation)", trade_impact: "Significant drop in US->EU exports if full tariffs and retaliation occur. EU exports to US also hit.", country_exposure: "Highly export-oriented economies like Ireland (pharmaceuticals, agri-food), Germany (autos, machinery), Italy (luxury goods, machinery) are particularly exposed.", trade_diversion: "Risk of trade diversion, e.g., China redirecting goods through third countries, or EU sourcing from non-US suppliers.", retaliation_cost: "Initial EU retaliation lists covered €4.5-6.3bn of US goods. Potential for escalation up to €18bn-€28bn+ if all threatened US tariffs are implemented.", sources: ["https://www.bruegel.org/analysis/economic-impact-trumps-tariffs-europe-initial-assessment", "https://en.wikipedia.org/wiki/2025_United_States_tariffs_against_the_European_Union", "European Commission Impact Assessments (Hypothetical updates)"] },
+                global: { trade_volume: "Significant reduction expected (-0.2% to -1.5% WTO estimate, depending on severity and duration). Could be higher if global recessionary pressures mount.", system_impact: "Challenge to the rules-based multilateral trading system (WTO). Increased protectionism globally, potential for trade wars.", supply_chains: "Major disruptions, increased costs, and pressure for re-shoring or 'friend-shoring', leading to fragmentation and inefficiencies. Heightened uncertainty for businesses.", sources: ["https://www.bruegel.org/analysis/economic-impact-trumps-tariffs-europe-initial-assessment", "https://www.politico.eu/article/us-donald-trump-tariff-war-empowering-eu-europe-free-trade-commission/", "WTO Global Trade Outlook Reports (Hypothetical updates)"] }
             };
 
             // 6. Glossary Data (Unchanged)
@@ -437,7 +889,7 @@ The baseline 10% and higher country-specific reciprocal tariffs (imposed via IEE
                  "De Minimis Threshold": "Value below which imports are duty-free ($800 in US, revoked for China).",
                  "Digital Services Tax (DST)": "Tax on revenues of large digital companies in a specific country.",
                  "IEEPA (International Emergency Economic Powers Act)": "US law allowing President to regulate commerce during a declared national emergency.",
-                 "Reciprocal Tariff": "2025 tariffs under IEEPA, aiming for 'fairness', including a 10% baseline and higher country-specific rates (many suspended).",
+                 "Reciprocal Tariff": "A key component of the 2025 U.S. trade policy, imposed under IEEPA. It includes a 10% baseline tariff on nearly all imports, plus higher country-specific tariffs (many of which were suspended for 90 days from April 10, 2025). The aim is to match the tariff rates that other countries apply to U.S. goods.",
                  "Section 232 (Trade Expansion Act of 1962)": "Allows tariffs on imports threatening national security (used for Steel, Aluminum, Autos).",
                  "Section 301 (Trade Act of 1974)": "Authorizes USTR action against unfair foreign trade practices (used vs China, threatened vs DSTs).",
                  "USMCA (United States-Mexico-Canada Agreement)": "Free trade agreement replacing NAFTA."
@@ -544,6 +996,12 @@ The baseline 10% and higher country-specific reciprocal tariffs (imposed via IEE
                  if (!data) {
                       contentDisplayDiv.innerHTML = '<p class="text-red-400 text-center">Error: Tariff information not found.</p>'; return;
                  }
+                 // Add a check for example sources and provide a note if they are used
+                 let sourceNote = '';
+                 if (data.sources && data.sources.some(s => s.toLowerCase().includes("(example source)"))) {
+                     sourceNote = `<p class="text-xs text-yellow-300 mt-2 italic">Note: Some sources listed are illustrative examples for demonstration.</p>`;
+                 }
+
                  contentDisplayDiv.innerHTML = `
                      <h2 class="text-2xl font-bold text-blue-300 mb-4">${countryName} - Tariff Summary</h2>
                      <div class="space-y-4 text-left bg-gray-900 bg-opacity-50 p-4 rounded-md border border-gray-700">
@@ -553,14 +1011,19 @@ The baseline 10% and higher country-specific reciprocal tariffs (imposed via IEE
                          <div><h3 class="text-lg font-semibold text-gray-100 mb-1">Additional Information:</h3><p class="text-gray-300 text-sm info-paragraph">${data.info || 'N/A'}</p></div>
                          <div><h3 class="text-lg font-semibold text-gray-100 mb-1">Countermeasures Announced:</h3><p class="text-gray-300 text-sm info-paragraph">${data.countermeasures || 'N/A'}</p></div>
                          ${createSourceLinks(data.sources)}
+                         ${sourceNote}
                      </div>`;
             }
 
             /** Displays product-specific tariff information */
             function displayProductInfo() {
                 contentDisplayDiv.innerHTML = '';
-                let content = '<h2 class="text-2xl font-bold text-blue-300 mb-6 text-center">Product-Specific Tariffs (Mainly Section 232)</h2><div class="space-y-6">';
+                let content = '<h2 class="text-2xl font-bold text-blue-300 mb-6 text-center">Product-Specific Tariffs (Mainly Section 232 & 301)</h2><div class="space-y-6">';
                 productTariffData.forEach(item => {
+                    let sourceNote = '';
+                    if (item.sources && item.sources.some(s => s.toLowerCase().includes("(example source)"))) {
+                        sourceNote = `<p class="text-xs text-yellow-300 mt-1 italic">Note: Some sources listed are illustrative examples.</p>`;
+                    }
                     content += `
                          <div class="bg-gray-900 bg-opacity-50 p-4 rounded-md border border-gray-700">
                              <h3 class="text-xl font-semibold text-gray-100 mb-2">${item.product || 'N/A'}</h3>
@@ -569,6 +1032,7 @@ The baseline 10% and higher country-specific reciprocal tariffs (imposed via IEE
                              <p class="text-sm text-gray-300 mb-1"><span class="font-semibold text-gray-100">Scope:</span> ${item.scope || 'N/A'}</p>
                              ${item.info ? `<p class="text-xs text-gray-400 mt-2 info-paragraph"><span class="font-semibold text-gray-100">Info:</span> ${item.info}</p>` : ''}
                              ${createSourceLinks(item.sources)}
+                             ${sourceNote}
                          </div>`;
                 });
                 content += '</div>';
@@ -695,6 +1159,11 @@ The baseline 10% and higher country-specific reciprocal tariffs (imposed via IEE
             /** Displays the economic impact summary */
             function displayImpactInfo() {
                 contentDisplayDiv.innerHTML = '';
+                // Example source note logic for impact data sections
+                const usSourceNote = impactData.us.sources && impactData.us.sources.some(s => s.toLowerCase().includes("(example source)")) ? `<p class="text-xs text-yellow-300 mt-1 italic">Note: Some sources are illustrative examples.</p>` : '';
+                const euSourceNote = impactData.eu.sources && impactData.eu.sources.some(s => s.toLowerCase().includes("(example source)")) ? `<p class="text-xs text-yellow-300 mt-1 italic">Note: Some sources are illustrative examples.</p>` : '';
+                const globalSourceNote = impactData.global.sources && impactData.global.sources.some(s => s.toLowerCase().includes("(example source)")) ? `<p class="text-xs text-yellow-300 mt-1 italic">Note: Some sources are illustrative examples.</p>` : '';
+
                 contentDisplayDiv.innerHTML = `
                     <h2 class="text-2xl font-bold text-blue-300 mb-6 text-center">Economic Impact Analysis (Estimates)</h2>
                     <p class="text-gray-400 text-center mb-6 text-sm">Summarized estimates from various sources (Tax Foundation, PIIE, Bruegel, etc.). Impacts depend heavily on retaliation and final tariff rates.</p>
@@ -709,6 +1178,7 @@ The baseline 10% and higher country-specific reciprocal tariffs (imposed via IEE
                                 <p><span class="font-semibold text-gray-100">Federal Revenue (Net 10yr):</span> ${impactData.us.revenue || 'N/A'}</p>
                                 <p><span class="font-semibold text-gray-100">Sectors Hit Hardest:</span> ${impactData.us.sectors_hit || 'N/A'}</p>
                                 ${createSourceLinks(impactData.us.sources)}
+                                ${usSourceNote}
                             </div>
                         </div>
                         <div class="bg-gray-900 bg-opacity-50 p-4 rounded-md border border-gray-700">
@@ -720,6 +1190,7 @@ The baseline 10% and higher country-specific reciprocal tariffs (imposed via IEE
                                 <p><span class="font-semibold text-gray-100">Trade Diversion Risk:</span> ${impactData.eu.trade_diversion || 'N/A'}</p>
                                 <p><span class="font-semibold text-gray-100">Retaliation Cost:</span> ${impactData.eu.retaliation_cost || 'N/A'}</p>
                                 ${createSourceLinks(impactData.eu.sources)}
+                                ${euSourceNote}
                             </div>
                         </div>
                         <div class="bg-gray-900 bg-opacity-50 p-4 rounded-md border border-gray-700">
@@ -729,6 +1200,7 @@ The baseline 10% and higher country-specific reciprocal tariffs (imposed via IEE
                                 <p><span class="font-semibold text-gray-100">Trading System:</span> ${impactData.global.system_impact || 'N/A'}</p>
                                 <p><span class="font-semibold text-gray-100">Supply Chains:</span> ${impactData.global.supply_chains || 'N/A'}</p>
                                 ${createSourceLinks(impactData.global.sources)}
+                                ${globalSourceNote}
                             </div>
                         </div>
                     </div>`;
